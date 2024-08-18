@@ -1,5 +1,5 @@
-import {Fragment} from 'react';
-import './Button.scss'
+import { Fragment } from 'react';
+import './Button.scss';
 
 const Button = ({
   children,
@@ -8,6 +8,7 @@ const Button = ({
   onClick = () => {},
   type,
   form,
+  width = '100%', 
   ...extraProps
 }) => {
   const getClassName = () => {
@@ -21,7 +22,7 @@ const Button = ({
     }
   };
 
-  const classNameDefault = `button-main ${getClassName ()}`;
+  const classNameDefault = `button-main ${getClassName()}`;
 
   return (
     <Fragment>
@@ -30,6 +31,7 @@ const Button = ({
         onClick={onClick}
         type={type}
         form={form}
+        style={{ width }} 
         {...extraProps}
       >
         {children}
@@ -37,4 +39,5 @@ const Button = ({
     </Fragment>
   );
 };
+
 export default Button;

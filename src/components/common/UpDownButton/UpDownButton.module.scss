@@ -1,0 +1,23 @@
+.updownButton {
+    border: 1px solid #dddddd;
+    background-color: #ffffff;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 16px;
+    color: #333333;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 120px; 
+  }
+  
+  .updownButton:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .arrowUpDown {
+    font-size: 12px;
+    margin-left: 5px;
+  }
+  

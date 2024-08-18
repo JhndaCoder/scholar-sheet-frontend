@@ -1,0 +1,17 @@
+.profileContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    // padding-top:40px;
+    // padding-left: 60px;
+    width:95vw;
+  }
+  
+  .headerContainer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    // padding: 20px;
+    gap: 20px;
+  }
+  

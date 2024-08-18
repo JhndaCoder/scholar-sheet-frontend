@@ -10,7 +10,7 @@
     border-radius: 0.5rem;
     padding: 0.8125rem 1rem;
     cursor: pointer;
-
+    width: 100%;
     &.primary {
         color: var(--white-black-white, #fff);
         background: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 100%), #4d62ff;
