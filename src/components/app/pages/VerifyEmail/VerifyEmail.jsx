@@ -3,7 +3,7 @@ import './VerifyEmail.scss';
 import Form from './../../molecules/Form/Form';
 import { Link } from 'react-router-dom';
 import Button from '../../../common/Button/Button';
-import { SessionStorage } from '../../../../utils/storage'; // Adjust the import path as needed
+import { SessionStorage } from '../../../../utils/storage';
 
 const VerifyEmail = () => {
   const [otp, setOtp] = useState(new Array(6).fill(''));
