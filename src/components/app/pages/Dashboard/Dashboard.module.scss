@@ -1,3 +1,9 @@
 .dashboardContainer{
     width:100vw;
 }
+.headerContainer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+  }

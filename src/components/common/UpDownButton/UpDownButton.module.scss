@@ -1,3 +1,7 @@
+.updownButtonContainer {
+  position: relative;
+  display: inline-block;
+}
 .updownButton {
     border: 1px solid #dddddd;
     background-color: #ffffff;
@@ -10,6 +14,7 @@
     align-items: center;
     justify-content: space-between;
     min-width: 120px; 
+
   }
   
   .updownButton:hover {
@@ -21,3 +26,24 @@
     margin-left: 5px;
   }
   
+  .dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    width: 100%;
+    z-index: 1000;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .dropdownItem {
+    padding: 8px 12px;
+    cursor: pointer;
+  
+    &:hover {
+      background-color: #f1f1f1;
+    }
+  }

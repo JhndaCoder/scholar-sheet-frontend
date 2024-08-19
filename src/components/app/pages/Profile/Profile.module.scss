@@ -1,17 +1,36 @@
 .profileContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    // padding-top:40px;
-    // padding-left: 60px;
-    width:95vw;
-  }
-  
-  .headerContainer {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    // padding: 20px;
-    gap: 20px;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  gap: 20px;  
+  width: 95vw;
+  padding: 20px; 
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+}
+
+.sidesKaContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.leftSideKrdungi {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  gap: 20px;
+}
+
+.rightSideKrdungi {
+  display: flex;
+  flex-direction: column;
+  width: 65%; 
+  gap: 20px;
+}
+
+

@@ -9,6 +9,9 @@ import Login from './components/app/organisms/Login/Login';
 import ProfileInfo from './components/app/organisms/ProfileInfo/ProfileInfo';
 import Profile from './components/app/pages/Profile/Profile';
 import VerifyEmail from './components/app/pages/VerifyEmail/VerifyEmail';
+import ExpInfo from './components/app/organisms/ExpInfo/ExpInfo';
+import DataTile from './components/app/molecules/DataTile/DataTile';
+import LineChartTile from './components/app/molecules/LineChartTile/LineChartTile';
 
 const router = createBrowserRouter ([
   {
@@ -42,6 +45,14 @@ const router = createBrowserRouter ([
         path: 'infovis',
       },
       {
+        element: <DataTile/>,
+        path: 'datatile',
+      },
+      {
+        element: <LineChartTile/>,
+        path: 'linecharttile',
+      },
+      {
         element: <PubInfo/>,
         path: 'pubinfo',
         children:[
@@ -51,6 +62,10 @@ const router = createBrowserRouter ([
           },
         ]
       },
+      {
+        element: <ExpInfo/>,
+        path: 'expinfo',
+      }
     ]
   },
   {

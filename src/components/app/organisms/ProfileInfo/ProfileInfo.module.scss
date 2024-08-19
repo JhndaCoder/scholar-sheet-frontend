@@ -1,48 +1,64 @@
 .profileInformation {
     display: flex;
-    flex-direction: row;
     width: 100%;
     padding: 20px;
-    padding-right:0px;
-    font-family: Inter;
-}
-
-.profilePicture {
+    gap: 40px;
+    font-family: Inter, sans-serif;
+  }
+  
+  .profileLeft {
+    width: 30%;
     display: flex;
     flex-direction: column;
-    width: 25vw;
-    align-items: center; /* Centers the image and text horizontally */
-    img {
-        width: 150px; /* Adjust the size of the circle */
-        height: 150px; /* Ensure it's a square */
-        border-radius: 50%; /* Makes the image circular */
-        object-fit: cover; /* Ensures the image covers the entire circle */
-    }
-}
-
-.deptInformation {
-    display: flex;
-    flex-direction: column;
-    width: 75vw;
+    align-items: center;
     gap: 20px;
-    background-color: #ffffff;
-    border-radius: 20px;
-    padding: 20px;
-}
-
-h3 {
-    font-weight: 400;
-}
-
-h4 {
-    font-weight: 700;
-}
-
-.row {
+  }
+  
+  .profilePicture {
+    width: 100%;
     display: flex;
-    justify-content: space-between;
-}
-
-.infoBlock {
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .profilePicture img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .profileDetails {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .detailBlock {
+    background-color: #f5f5f5;
+    padding: 10px 15px;
+    border-radius: 10px;
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .graphSpace {
     flex: 1;
-}
+    display: flex;
+    justify-content: flex-end;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  p {
+    margin: 0;
+    color: #333;
+  }
+  

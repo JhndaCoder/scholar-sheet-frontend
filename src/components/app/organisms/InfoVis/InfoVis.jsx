@@ -1,18 +1,21 @@
 import { Fragment } from 'react';
 import styles from './InfoVis.module.scss';
 import UpDownButton from '../../../common/UpDownButton/UpDownButton';
-import PieChart from '../../../common/Charts/PieChart';
+import PieChart from '../../../common/Charts/PieChart/PieChart';
 import info from './info';
 import publishers from './publishers';
 import yearWise from './yearWise';
 import domains from './domains';
+import DataTile from '../../molecules/DataTile/DataTile';
 
 const InfoVis = () => {
   return (
     <Fragment>
         <div className={styles.infoVisContainer}>
+        <DataTile/>
           <div className={styles.infoVisHeading}>
-            <h3>Visualisation</h3>
+            {/* <h3>Visualisation</h3> */}
+            
             <div className={styles.buttonContainer}>
                 <UpDownButton label="Pie Chart" />
                 <UpDownButton label="Monthly" />

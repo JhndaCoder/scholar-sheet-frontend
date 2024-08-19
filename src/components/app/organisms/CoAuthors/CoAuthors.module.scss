@@ -1,0 +1,33 @@
+.coauthorContainer {
+    display: flex;
+    background-color: #ffffff;
+    padding: 20px;
+    flex-direction: column;
+    border-radius: 20px;
+    position: relative;
+  }
+  
+  .infoContainer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .infoContainer img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .showMoreButton {
+    align-self: flex-end;
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  

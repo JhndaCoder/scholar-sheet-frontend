@@ -1,38 +1,32 @@
 import styles from './ProfileInfo.module.scss';
 import topg from '../../../../assets/image.png';
+import BarChart from '../../../common/Charts/BarChart/BarChart';
+import sampleData from './sample';
+
 const ProfileInformation = ({ profileData }) => {
-  const departmentInfo = [
-    { label: "Department", value: profileData.department },
-    { label: "Role", value: profileData.role },
-    { label: "Institute", value: profileData.institute },
-    { label: "University", value: profileData.university },
-    { label: "YOE", value: profileData.experience },
-    { label: "ResearchArea", value: profileData.researchArea }
+  const profileDetails = [
+    profileData.name,
+    profileData.role,
+    profileData.department,
+    profileData.institute
   ];
 
   return (
     <div className={styles.profileInformation}>
-      <div className={styles.profilePicture}>
-        <img src={topg} />
-        <h3>{profileData.name}</h3>
+      <div className={styles.profileLeft}>
+        <div className={styles.profilePicture}>
+          <img src={topg} alt="Profile" />
+        </div>
+        <div className={styles.profileDetails}>
+          {profileDetails.map((detail, index) => (
+            <div key={index} className={styles.detailBlock}>
+              <p>{detail}</p>
+            </div>
+          ))}
+        </div>
       </div>
-      <div className={styles.deptInformation}>
-        <div className={styles.row}>
-          {departmentInfo.slice(0, 3).map((info, index) => (
-            <div key={index} className={styles.infoBlock}>
-              <h4>{info.label}</h4>
-              <h3>{info.value}</h3>
-            </div>
-          ))}
-        </div>
-        <div className={styles.row}>
-          {departmentInfo.slice(3).map((info, index) => (
-            <div key={index} className={styles.infoBlock}>
-              <h4>{info.label}</h4>
-              <h3>{info.value}</h3>
-            </div>
-          ))}
-        </div>
+      <div className={styles.graphSpace}>
+        <BarChart title="Publications" data={sampleData} />
       </div>
     </div>
   );

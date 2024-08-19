@@ -5,7 +5,11 @@ import InfoVis from "../../organisms/InfoVis/InfoVis";
 import PubInfo from "../../organisms/PubInfo/PubInfo";
 import Logo from "../../atoms/Logo/Logo";
 import SearchBar from "../../../common/SearchBar/SearchBar";
-
+import ExpInfo from "../../organisms/ExpInfo/ExpInfo";
+import experiences from "./experiences";
+import DataTile from "../../molecules/DataTile/DataTile";
+import LineChartTile from "../../molecules/LineChartTile/LineChartTile";
+import CoAuthors from "../../organisms/CoAuthors/CoAuthors";
 const profileData = {
   name: "Uddeepta Raaj Kashyap",
   profilePicture: "",
@@ -23,13 +27,26 @@ const Profile = () => {
       <div className={styles.profileContainer}>
         <div className={styles.headerContainer}>
           <Logo />
-          <SearchBar width="800px" placeholder="Search for person or institute" />
+          <SearchBar
+            width="800px"
+            placeholder="Search for person or institute"
+          />
         </div>
         <ProfileInformation profileData={profileData} />
-        <InfoVis />
-        <PubInfo />
-        <div className={styles.infoVisualisation}></div>
-        <div className={styles.publicationArea}></div>
+        {/* <InfoVis /> */}
+        <div className={styles.sidesKaContainer}>
+          <div className={styles.leftSideKrdungi}>
+            <CoAuthors />
+          </div>
+          <div className={styles.rightSideKrdungi}>
+            <DataTile />
+            <LineChartTile />
+            <ExpInfo experiences={experiences} />
+          </div>
+        </div>
+        <div className={styles.publicationArea}>
+          <PubInfo />
+        </div>
       </div>
     </Fragment>
   );
