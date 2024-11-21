@@ -1,0 +1,24 @@
+.chart-container {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px 0;
+
+  .chart-title {
+    color: #353535;
+    font-family: Inter;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .recharts-tooltip-wrapper {
+    .recharts-default-tooltip {
+      background-color: #1e2d3d;
+      color: #fff;
+      border-radius: 5px;
+      padding: 10px;
+    }
+  }
+}

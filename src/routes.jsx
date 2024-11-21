@@ -16,6 +16,12 @@ const VerificationPending = lazy(
     import('./components/app/organisms/VerificationPending/VerificationPending')
 );
 const Home = lazy(() => import('./components/app/pages/Home/Home'));
+const AddFaculty = lazy(
+  () => import('./components/app/pages/AddFaculty/AddFaculty')
+);
+
+import Dashboard from './components/app/pages/Dashboard/Dashboard';
+import ReportGenerator from './components/app/organisms/ReportGenerator/ReportGenerator';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -52,14 +58,32 @@ const router = createBrowserRouter([
     path: '/home',
     element: (
       <ProtectedRoute>
-        <Home />
+        <Dashboard />
       </ProtectedRoute>
     ),
+    children: [
+      {
+        index: true,
+        element: <Home />,
+      },
+      {
+        path: 'reports',
+        element: <ReportGenerator />,
+      },
+      {
+        path: 'researchers',
+        element: <Home />,
+      },
+      {
+        path: 'addFaculty',
+        element: <AddFaculty />,
+      },
+    ],
   },
   {
     path: '*',
-    element: <Navigate to="/" replace />, // Redirect any unknown routes to Auth page
-  }
+    element: <Navigate to="/" replace />,
+  },
 ]);
 
 export default router;

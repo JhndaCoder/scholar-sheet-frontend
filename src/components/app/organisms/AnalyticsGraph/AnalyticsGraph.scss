@@ -1,0 +1,58 @@
+.analytics-dashboard {
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin: 3rem 0;
+  font-family: Inter;
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+  }
+
+  h3 {
+    color: #353535;
+    font-family: Inter;
+    font-size: 1.75rem;
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  .controls {
+    display: flex;
+    gap: 20px;
+    height: 100%;
+
+    label {
+      display: flex;
+      flex-direction: column;
+      font-weight: 600;
+
+      color: #9a9a9a;
+      font-family: Inter;
+      font-size: 1rem;
+      font-style: normal;
+      font-weight: 600;
+    }
+
+    select {
+      margin-top: 5px;
+      padding: 5px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      color: #9a9a9a;
+      font-family: Inter;
+      font-size: 1rem;
+      font-style: normal;
+      font-weight: 600;
+    }
+
+    option {
+      color: #363636;
+      background-color: #f3f6fd;
+    }
+  }
+}

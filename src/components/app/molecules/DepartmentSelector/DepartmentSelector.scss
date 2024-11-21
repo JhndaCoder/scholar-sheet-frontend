@@ -1,0 +1,30 @@
+.department-selector {
+  display: flex;
+  align-items: center;
+  background-color: #f3f6fd;
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: Inter;
+  font-size: 0.875rem;
+  color: #363636;
+
+  label {
+    color: #363636;
+  }
+
+  select {
+    border: none;
+    outline: none;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    cursor: pointer;
+    background-color: inherit;
+    color: #363636;
+  }
+
+  option {
+    color: #363636;
+    background-color: #f3f6fd;
+  }
+}

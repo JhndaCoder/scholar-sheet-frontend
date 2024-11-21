@@ -1,0 +1,30 @@
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+  min-height: 100vh;
+  width: 100%;
+
+  .sidebar-container-main {
+    flex: 0 0 250px;
+    height: 100%;
+    background: #f3f6fd;
+  }
+
+  .dashboard-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    background-color: #ffffff;
+
+    .main-content {
+      padding: 20px;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    ::-webkit-scrollbar {
+      width: 0px;
+    }
+  }
+}
