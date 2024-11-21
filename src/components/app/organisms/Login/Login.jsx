@@ -1,9 +1,9 @@
-import { Fragment, useState } from "react";
-import Form from "../../molecules/Form/Form";
-import Input from "../../../common/Input/Input";
-import { Link, useNavigate } from "react-router-dom";
-import { useLogin } from '../../../../hooks/ReactQueryHooks';
-import { LocalStorage } from "../../../../utils/storage";
+import { Fragment, useState } from 'react';
+import Form from '../../molecules/Form/Form';
+import Input from '../../../common/Input/Input';
+import { Link, useNavigate } from 'react-router-dom';
+import { useLogin } from './../../../../hooks/useAuthHooks';
+import { LocalStorage } from '../../../../utils/storage';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ const Login = () => {
     password: '',
   });
 
-  const { login, isLoading, isError, error} = useLogin();
+  const { login, isLoading, isError, error } = useLogin();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,8 +35,7 @@ const Login = () => {
         console.log('Login failed', error.response?.data || error.message);
       },
     });
-};
-
+  };
 
   const InputFieldData = [
     {
@@ -44,7 +43,7 @@ const Login = () => {
       placeholder: 'Institute Email',
       type: 'email',
       autoComplete: 'email',
-      "aria-label": 'Institute Email',            
+      'aria-label': 'Institute Email',
       value: formData.email,
       onChange: handleChange,
     },
@@ -53,10 +52,10 @@ const Login = () => {
       placeholder: 'Password',
       type: 'password',
       autoComplete: 'current-password',
-      "aria-label": 'Password',            
+      'aria-label': 'Password',
       value: formData.password,
       onChange: handleChange,
-    }
+    },
   ];
 
   return (
@@ -64,12 +63,16 @@ const Login = () => {
       <Form
         title="Login to your account"
         subTitle="Welcome back to Scholar Sheet"
-        subtext={<Fragment>Don’t have an account? <Link to='/'>Sign up</Link></Fragment>}
+        subtext={
+          <Fragment>
+            Don’t have an account? <Link to="/">Sign up</Link>
+          </Fragment>
+        }
         onSubmit={handleSubmit}
         buttonText={isLoading ? 'Logging in...' : 'Login'}
       >
         {InputFieldData.map((inputField, index) => {
-          return <Input key={index} {...inputField} />
+          return <Input key={index} {...inputField} />;
         })}
       </Form>
       {isError && <p style={{ color: 'red' }}>Login failed: {error.message}</p>}
