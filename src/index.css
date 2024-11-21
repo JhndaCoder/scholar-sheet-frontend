@@ -12,22 +12,18 @@
   scroll-padding-top: 2rem;
 }
 
-.App{
-    height: 100%;
-    min-height: 100vh;
-    min-height: 100svh;
-    width: 100%;
-    overflow-x: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.App {
+  height: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  width: 100%;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-img{
-    -webkit-user-drag: none;
+img {
+  -webkit-user-drag: none;
 }
-
-/* ::-webkit-scrollbar {
-    width: 0;
-} */

@@ -1,5 +1,5 @@
-import {Fragment} from 'react';
-import './Button.scss'
+import { Fragment } from 'react';
+import './Button.scss';
 
 const Button = ({
   children,
@@ -21,7 +21,7 @@ const Button = ({
     }
   };
 
-  const classNameDefault = `button-main ${getClassName ()}`;
+  const classNameDefault = `button-main ${getClassName()}`;
 
   return (
     <Fragment>

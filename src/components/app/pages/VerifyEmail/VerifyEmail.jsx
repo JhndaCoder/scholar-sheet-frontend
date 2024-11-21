@@ -102,7 +102,7 @@ const VerifyEmail = () => {
             {otp.map((data, index) => (
               <input
                 key={index}
-                type='text'
+                type="text"
                 maxLength="1"
                 value={data}
                 onChange={(e) => handleOtpChange(e, index)}
@@ -111,14 +111,16 @@ const VerifyEmail = () => {
                 ref={(el) => (otpInputRefs.current[index] = el)}
                 aria-label={`OTP input ${index + 1}`}
                 autoComplete="one-time-code"
-                inputMode='numeric'
+                inputMode="numeric"
               />
             ))}
           </div>
-          <h3 className='resend-otp'>
+          <h3 className="resend-otp">
             Didn’t receive code?{' '}
             {canResend ? (
-              <Button variant="secondary" onClick={handleResendClick}>Resend</Button>
+              <Button variant="secondary" onClick={handleResendClick}>
+                Resend
+              </Button>
             ) : (
               <span>Resend otp in {timer}s</span>
             )}
