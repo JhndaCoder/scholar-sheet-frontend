@@ -21,7 +21,6 @@ const AddFaculty = lazy(
 );
 
 import Dashboard from './components/app/pages/Dashboard/Dashboard';
-import ReportGenerator from './components/app/organisms/ReportGenerator/ReportGenerator';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -66,10 +65,10 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
       },
-      {
-        path: 'reports',
-        element: <ReportGenerator />,
-      },
+      // {
+      //   path: 'reports',
+      //   element: <ReportGenerator />,
+      // },
       {
         path: 'researchers',
         element: <Home />,

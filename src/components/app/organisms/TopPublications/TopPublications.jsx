@@ -15,6 +15,7 @@ const TopPublications = () => {
     sort: 'citations:desc',
     citationsRange: [0, 1000],
   });
+  const [yearInput, setYearInput] = useState('');
   const [appliedFilters, setAppliedFilters] = useState(filters);
 
   const { data: preFilterData } = useGetPreFilterData(selectedDepartment);
@@ -24,12 +25,44 @@ const TopPublications = () => {
     page
   );
 
-  const handleInputChange = useCallback((e) => {
-    const { name, value } = e.target;
+  const parseYearInput = (input) => {
+    const years = new Set();
+    const parts = input.split(',').map((part) => part.trim());
+
+    parts.forEach((part) => {
+      if (part.includes('-')) {
+        const [start, end] = part.split('-').map(Number);
+        if (start && end && start <= end) {
+          for (let year = start; year <= end; year++) {
+            years.add(year);
+          }
+        }
+      } else if (!isNaN(Number(part))) {
+        years.add(Number(part));
+      }
+    });
+
+    return Array.from(years).sort((a, b) => a - b);
+  };
+
+  const applyYearFilter = useCallback(() => {
     setFilters((prev) => ({
       ...prev,
-      [name]: value.split(',').map((item) => item.trim()),
+      year: parseYearInput(yearInput),
     }));
+  }, [yearInput]);
+
+  const handleInputChange = useCallback((e) => {
+    const { name, value } = e.target;
+
+    if (name === 'year') {
+      setYearInput(value);
+    } else {
+      setFilters((prev) => ({
+        ...prev,
+        [name]: value.split(',').map((item) => item.trim()),
+      }));
+    }
   }, []);
 
   const handleSortChange = useCallback((e) => {
@@ -151,10 +184,11 @@ const TopPublications = () => {
         <label>
           <input
             type="text"
-            placeholder="Enter years, e.g., 2021,2022"
+            placeholder="Enter years, e.g., 2021,2022-2024"
             name="year"
-            value={filters.year.join(',')}
+            value={yearInput}
             onChange={handleInputChange}
+            onBlur={applyYearFilter}
             list="year-options"
           />
           {preFilterData && (
