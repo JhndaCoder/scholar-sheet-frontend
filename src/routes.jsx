@@ -20,6 +20,8 @@ const AddFaculty = lazy(
   () => import('./components/app/pages/AddFaculty/AddFaculty')
 );
 
+import Report from './components/app/pages/Reports/Report';
+
 import Dashboard from './components/app/pages/Dashboard/Dashboard';
 
 export const queryClient = new QueryClient({
@@ -65,10 +67,10 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
       },
-      // {
-      //   path: 'reports',
-      //   element: <ReportGenerator />,
-      // },
+      {
+        path: 'reports',
+        element: <Report />,
+      },
       {
         path: 'researchers',
         element: <Home />,
