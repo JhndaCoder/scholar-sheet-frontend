@@ -108,6 +108,7 @@ const TopPublications = () => {
     };
     setFilters(defaultFilters);
     setAppliedFilters(defaultFilters);
+    setYearInput('');
     setPage(1);
   }, []);
 
