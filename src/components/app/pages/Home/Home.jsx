@@ -7,6 +7,7 @@ import ResearchTopicsChart from '../../organisms/ResearchTopicsChart/ResearchTop
 import JournalDiversityChart from '../../organisms/JournalDiversityChart/JournalDiversityChart';
 import TopPublications from '../../organisms/TopPublications/TopPublications';
 import { useMainHome } from '../../../../context/MainHomeContext';
+import YearRangeStats from '../../organisms/YearRangeStats/YearRangeStats';
 
 const Home = () => {
   const { setMainHomeContent } = useMainHome();
@@ -22,6 +23,7 @@ const Home = () => {
     <Fragment>
       <div className="main-home">
         <StatsCards />
+        <YearRangeStats />
         <AnalyticsGraph />
         <TopResearchers />
         <ResearchTopicsChart />

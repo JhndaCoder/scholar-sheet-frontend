@@ -6,7 +6,7 @@ export const useAddDepartments = () => {
   const queryClient = useQueryClient();
   const { mutate: addDepartments, isLoading } = useMutation({
     mutationFn: (departments) =>
-      customFetch.post('/admin/departments', { departments }),
+      customFetch.post('/admin/department', { departments }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['departments'] });
     },
@@ -180,42 +180,6 @@ export const useGetRankData = () => {
   return { isLoading, data, error, isError };
 };
 
-export const useGetGenderDiversity = (department) => {
-  const { isLoading, data, error, isError } = useQuery({
-    queryKey: ['gender-diversity', department],
-    queryFn: async () => {
-      const { data } = await customFetch(
-        `/admin/stats/gender-diversity${department ? `?department=${department}` : ''}`
-      );
-      return data;
-    },
-  });
-  return { isLoading, data, error, isError };
-};
-
-export const useGenerateReport = (department, year) => {
-  const { isLoading, data, error, isError } = useQuery({
-    queryKey: ['generate-report', department, year],
-    queryFn: async () => {
-      let endpoint = `/admin/stats/report`;
-      const params = [];
-
-      if (department)
-        params.push(`department=${encodeURIComponent(department)}`);
-      if (year) params.push(`year=${encodeURIComponent(year)}`);
-
-      if (params.length > 0) {
-        endpoint += `?${params.join('&')}`;
-      }
-
-      const response = await customFetch.get(endpoint);
-      return response.data;
-    },
-  });
-
-  return { isLoading, data, error, isError };
-};
-
 export const useAddResearcher = () => {
   const queryClient = useQueryClient();
 
@@ -252,4 +216,34 @@ export const useAddResearcher = () => {
   });
 
   return { addResearcher, isLoading, error, isError, isSuccess };
+};
+
+export const useGetStatsForYearRange = (startYear, endYear, department) => {
+  const { isLoading, data, error, isError } = useQuery({
+    queryKey: ['stats-year-range', startYear, endYear, department],
+    queryFn: async () => {
+      if (!startYear || !endYear) {
+        throw new Error('Start year and end year are required');
+      }
+      const { data } = await customFetch.get(
+        `/admin/stats/year-range?startYear=${startYear}&endYear=${endYear}${department ? `&department=${department}` : ''}`
+      );
+      return data;
+    },
+    enabled: !!startYear && !!endYear,
+  });
+  return { isLoading, data, error, isError };
+};
+
+export const useGetGenderDistribution = (department) => {
+  const { isLoading, data, error, isError } = useQuery({
+    queryKey: ['gender-distribution', department],
+    queryFn: async () => {
+      const { data } = await customFetch.get(
+        `/admin/stats/gender-distribution${department ? `?department=${department}` : ''}`
+      );
+      return data;
+    },
+  });
+  return { isLoading, data, error, isError };
 };

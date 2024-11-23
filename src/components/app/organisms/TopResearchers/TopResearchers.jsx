@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useGetTopResearchers } from '../../../../hooks/useAdminStatsHooks';
-import { faker } from '@faker-js/faker';
 import { useDepartment } from '../../../../context/DepartmentContext';
 import './TopResearchers.scss';
 
@@ -63,7 +62,7 @@ const TopResearchers = () => {
           <li key={index} className="researcher-item">
             <div className="researcher-avatar">
               <img
-                src={faker.image.avatar()}
+                src={`https://scholar.googleusercontent.com/citations?view_op=medium_photo&user=${researcher.scholar_id}`}
                 alt={`Avatar of ${researcher.name}`}
               />
             </div>
