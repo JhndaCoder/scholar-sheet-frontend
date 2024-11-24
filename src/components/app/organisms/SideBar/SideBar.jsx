@@ -1,47 +1,14 @@
-import { Fragment } from 'react';
+import {Fragment} from 'react';
 import './SideBar.scss';
 import Logo from '../../atoms/Logo/Logo';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
-const sideBarInfo = [
-  {
-    title: 'Dashboard',
-    icon: 'dashboard',
-    path: '/home',
-  },
-  {
-    title: 'Researchers',
-    icon: 'person',
-    path: '/home/researchers',
-  },
-  {
-    title: 'Add Faculty',
-    icon: 'group_add',
-    path: '/home/addFaculty',
-  },
-  {
-    title: 'Rankings',
-    icon: 'insert_chart',
-    path: '/home/rankings',
-  },
-  {
-    title: 'Reports',
-    icon: 'draft',
-    path: '/home/reports',
-  },
-  {
-    title: 'Settings',
-    icon: 'settings',
-    path: '/home/settings',
-  },
-];
-
-export const SideBar = ({ activeTab, onTabChange }) => {
-  const navigate = useNavigate();
+export const SideBar = ({activeTab, onTabChange, sideBarInfo}) => {
+  const navigate = useNavigate ();
 
   const handleTabChange = (index, path) => {
-    onTabChange(index);
-    navigate(path);
+    onTabChange (index);
+    navigate (path);
   };
 
   return (
@@ -49,12 +16,12 @@ export const SideBar = ({ activeTab, onTabChange }) => {
       <div className="sidebar-container-main">
         <Logo />
         <div className="sidebar-content">
-          {sideBarInfo.map((item, index) => {
+          {sideBarInfo.map ((item, index) => {
             return (
               <div
                 key={index}
                 className={`sidebar-item ${activeTab === index ? 'active' : ''}`}
-                onClick={() => handleTabChange(index, item.path)}
+                onClick={() => handleTabChange (index, item.path)}
               >
                 <span className="material-symbols-outlined icon">
                   {item.icon}
