@@ -72,7 +72,7 @@ const TopResearchers = () => {
             </div>
             <div className="researcher-stats">
               <span>{researcher[criteria]}</span>
-              <p className="growth">{index % 2 === 0 ? '+0.43%' : '-0.23%'}</p>
+              {/* <p className="growth">{index % 2 === 0 ? '+0.43%' : '-0.23%'}</p> */}
             </div>
           </li>
         ))}

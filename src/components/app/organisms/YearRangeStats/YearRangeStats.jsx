@@ -19,21 +19,30 @@ const YearRangeStats = () => {
     selectedDepartment
   );
 
-  const validateInputs = useCallback(() => {
-    const start = parseInt(startYear, 10);
-    const end = parseInt(endYear, 10);
+  const validateInputsAndSetRange = useCallback(() => {
+    let start = parseInt(startYear, 10);
+    let end = parseInt(endYear, 10);
 
-    if (!start || !end || start > end) {
-      setErrorMessage('Please enter a valid year range (e.g., 2020 to 2024).');
-      return false;
+    if (!start && !end) {
+      setErrorMessage('Please enter at least one valid year.');
+      return null;
     }
+    if (!start) start = end;
+    if (!end) end = start;
+
+    if (start > end) {
+      setErrorMessage('Start year cannot be greater than end year.');
+      return null;
+    }
+
     setErrorMessage('');
-    return true;
+    return { startYear: start, endYear: end };
   }, [startYear, endYear]);
 
   const handleGenerateStats = () => {
-    if (validateInputs()) {
-      setAppliedRange({ startYear, endYear });
+    const validRange = validateInputsAndSetRange();
+    if (validRange) {
+      setAppliedRange(validRange);
     }
   };
 
@@ -45,7 +54,6 @@ const YearRangeStats = () => {
       </p>
       <div className="filters">
         <label>
-          {/* Start Year: */}
           <input
             type="number"
             value={startYear}
@@ -54,7 +62,6 @@ const YearRangeStats = () => {
           />
         </label>
         <label>
-          {/* End Year: */}
           <input
             type="number"
             value={endYear}
