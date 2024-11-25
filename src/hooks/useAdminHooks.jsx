@@ -1,9 +1,9 @@
-import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import customFetch from '../utils/api';
 
 // Hook for adding a researcher
 export const useAddResearcher = () => {
-  const queryClient = useQueryClient ();
+  const queryClient = useQueryClient();
 
   const {
     mutate: addResearcher,
@@ -11,9 +11,9 @@ export const useAddResearcher = () => {
     error,
     isError,
     isSuccess,
-  } = useMutation ({
-    mutationFn: ({scholar_id, email, department, positions, gender}) =>
-      customFetch.post ('/admin/researcher', {
+  } = useMutation({
+    mutationFn: ({ scholar_id, email, department, positions, gender }) =>
+      customFetch.post('/admin/researcher', {
         scholar_id,
         email,
         department,
@@ -21,34 +21,34 @@ export const useAddResearcher = () => {
         gender,
       }),
     onSuccess: () => {
-      queryClient.invalidateQueries (['researchers']);
+      queryClient.invalidateQueries(['researchers']);
     },
-    onError: err => {
-      console.error ('Error adding researcher:', err);
+    onError: (err) => {
+      console.error('Error adding researcher:', err);
     },
   });
 
-  return {addResearcher, isLoading, error, isError, isSuccess};
+  return { addResearcher, isLoading, error, isError, isSuccess };
 };
 
 // Hook for fetching all researchers
 export const useGetAllResearchers = (filters = {}) => {
-  const {isLoading, data, error, isError} = useQuery ({
+  const { isLoading, data, error, isError } = useQuery({
     queryKey: ['researchers', filters],
     queryFn: async () => {
-      const {data} = await customFetch.get ('/admin/researchers', {
+      const { data } = await customFetch.get('/admin/researchers', {
         params: filters,
       });
       return data;
     },
   });
 
-  return {isLoading, data, error, isError};
+  return { isLoading, data, error, isError };
 };
 
 // Hook for updating a researcher
 export const useUpdateResearcher = () => {
-  const queryClient = useQueryClient ();
+  const queryClient = useQueryClient();
 
   const {
     mutate: updateResearcher,
@@ -56,23 +56,23 @@ export const useUpdateResearcher = () => {
     error,
     isError,
     isSuccess,
-  } = useMutation ({
-    mutationFn: ({id, updates}) =>
-      customFetch.put (`/admin/researcher/update/${id}`, updates),
+  } = useMutation({
+    mutationFn: ({ id, updates }) =>
+      customFetch.put(`/admin/researcher/update/${id}`, updates),
     onSuccess: () => {
-      queryClient.invalidateQueries (['researchers']);
+      queryClient.invalidateQueries(['researchers']);
     },
-    onError: err => {
-      console.error ('Error updating researcher:', err);
+    onError: (err) => {
+      console.error('Error updating researcher:', err);
     },
   });
 
-  return {updateResearcher, isLoading, error, isError, isSuccess};
+  return { updateResearcher, isLoading, error, isError, isSuccess };
 };
 
 // Hook for deleting a researcher
 export const useDeleteResearcher = () => {
-  const queryClient = useQueryClient ();
+  const queryClient = useQueryClient();
 
   const {
     mutate: deleteResearcher,
@@ -80,23 +80,25 @@ export const useDeleteResearcher = () => {
     error,
     isError,
     isSuccess,
-  } = useMutation ({
-    mutationFn: scholar_id =>
-      customFetch.delete (`/admin/researcher/delete`, {params: {scholar_id}}),
+  } = useMutation({
+    mutationFn: (scholar_id) =>
+      customFetch.delete(`/admin/researcher/delete`, {
+        params: { scholar_id },
+      }),
     onSuccess: () => {
-      queryClient.invalidateQueries (['researchers']);
+      queryClient.invalidateQueries(['researchers']);
     },
-    onError: err => {
-      console.error ('Error deleting researcher:', err);
+    onError: (err) => {
+      console.error('Error deleting researcher:', err);
     },
   });
 
-  return {deleteResearcher, isLoading, error, isError, isSuccess};
+  return { deleteResearcher, isLoading, error, isError, isSuccess };
 };
 
 // Hook for adding departments
 export const useAddDepartments = () => {
-  const queryClient = useQueryClient ();
+  const queryClient = useQueryClient();
 
   const {
     mutate: addDepartments,
@@ -104,16 +106,16 @@ export const useAddDepartments = () => {
     error,
     isError,
     isSuccess,
-  } = useMutation ({
-    mutationFn: departments =>
-      customFetch.post ('/admin/department', {departments}),
+  } = useMutation({
+    mutationFn: (departments) =>
+      customFetch.post('/admin/department', { departments }),
     onSuccess: () => {
-      queryClient.invalidateQueries (['departments']);
+      queryClient.invalidateQueries(['departments']);
     },
-    onError: err => {
-      console.error ('Error adding departments:', err);
+    onError: (err) => {
+      console.error('Error adding departments:', err);
     },
   });
 
-  return {addDepartments, isLoading, error, isError, isSuccess};
+  return { addDepartments, isLoading, error, isError, isSuccess };
 };

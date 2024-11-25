@@ -1,7 +1,7 @@
-import {Fragment, useState} from 'react';
+import { Fragment, useState } from 'react';
 import Form from '../../molecules/Form/Form';
 import Input from '../../../common/Input/Input';
-import {useAddResearcher} from '../../../../hooks/useAdminHooks';
+import { useAddResearcher } from '../../../../hooks/useAdminHooks';
 import './AddFaculty.scss';
 
 const InputFieldData = [
@@ -61,43 +61,38 @@ const InputFieldData = [
     placeholder: 'Gender',
     type: 'select',
     options: [
-      {value: 'male', label: 'Male'},
-      {value: 'female', label: 'Female'},
-      {value: 'other', label: 'Other'},
+      { value: 'male', label: 'Male' },
+      { value: 'female', label: 'Female' },
+      { value: 'other', label: 'Other' },
     ],
     'aria-label': 'Gender',
   },
 ];
 
 const AddFaculty = () => {
-  const [formData, setFormData] = useState ({
+  const [formData, setFormData] = useState({
     scholar_id: '',
     email: '',
     department: '',
-    positions: [{start: '', end: '', position: '', institute: ''}],
+    positions: [{ start: '', end: '', position: '', institute: '' }],
     gender: '',
   });
 
-  const {
-    addResearcher,
-    isLoading,
-    isError,
-    error,
-    isSuccess,
-  } = useAddResearcher ();
+  const { addResearcher, isLoading, isError, error, isSuccess } =
+    useAddResearcher();
 
-  const handleChange = e => {
-    const {name, value} = e.target;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
 
     if (name === 'scholar_id') {
       const urlPattern = /user=([^&]+)/;
-      const match = value.match (urlPattern);
-      setFormData ({
+      const match = value.match(urlPattern);
+      setFormData({
         ...formData,
         [name]: match ? match[1] : value,
       });
     } else {
-      setFormData ({
+      setFormData({
         ...formData,
         [name]: value,
       });
@@ -107,22 +102,22 @@ const AddFaculty = () => {
   const handlePositionChange = (index, field, value) => {
     const updatedPositions = [...formData.positions];
     updatedPositions[index][field] = value;
-    setFormData ({...formData, positions: updatedPositions});
+    setFormData({ ...formData, positions: updatedPositions });
   };
 
   const handleAddPosition = () => {
-    setFormData ({
+    setFormData({
       ...formData,
       positions: [
         ...formData.positions,
-        {start: '', end: '', position: '', institute: ''},
+        { start: '', end: '', position: '', institute: '' },
       ],
     });
   };
 
-  const handleSubmit = e => {
-    e.preventDefault ();
-    addResearcher (formData);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addResearcher(formData);
   };
 
   return (
@@ -134,14 +129,14 @@ const AddFaculty = () => {
           buttonText={isLoading ? 'Adding...' : 'Add Faculty'}
           onSubmit={handleSubmit}
         >
-          {InputFieldData.map ((inputField, index) => {
+          {InputFieldData.map((inputField, index) => {
             if (inputField.type === 'group') {
               return (
                 <div key={index} className="position-group">
                   <h4>{inputField.placeholder}</h4>
-                  {formData.positions.map ((position, positionIndex) => (
+                  {formData.positions.map((position, positionIndex) => (
                     <div key={positionIndex} className="position-fields">
-                      {inputField.fields.map ((field, fieldIndex) => (
+                      {inputField.fields.map((field, fieldIndex) => (
                         <Input
                           key={fieldIndex}
                           name={field.name}
@@ -150,12 +145,13 @@ const AddFaculty = () => {
                           value={
                             formData.positions[positionIndex][field.name] || ''
                           }
-                          onChange={e =>
-                            handlePositionChange (
+                          onChange={(e) =>
+                            handlePositionChange(
                               positionIndex,
                               field.name,
                               e.target.value
-                            )}
+                            )
+                          }
                           {...field}
                         />
                       ))}
@@ -180,7 +176,7 @@ const AddFaculty = () => {
                   aria-label={inputField['aria-label']}
                 >
                   <option value="">{inputField.placeholder}</option>
-                  {inputField.options.map ((option, optionIndex) => (
+                  {inputField.options.map((option, optionIndex) => (
                     <option key={optionIndex} value={option.value}>
                       {option.label}
                     </option>
@@ -199,10 +195,12 @@ const AddFaculty = () => {
             }
           })}
         </Form>
-        {isSuccess &&
-          <p style={{color: 'green'}}>Faculty added successfully!</p>}
-        {isError &&
-          <p style={{color: 'red'}}>Error adding faculty: {error.message}</p>}
+        {isSuccess && (
+          <p style={{ color: 'green' }}>Faculty added successfully!</p>
+        )}
+        {isError && (
+          <p style={{ color: 'red' }}>Error adding faculty: {error.message}</p>
+        )}
       </div>
     </Fragment>
   );

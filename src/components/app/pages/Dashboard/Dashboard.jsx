@@ -1,7 +1,7 @@
-import {Fragment, useState, useEffect} from 'react';
-import {SideBar} from '../../organisms/SideBar/SideBar';
+import { Fragment, useState, useEffect } from 'react';
+import { SideBar } from '../../organisms/SideBar/SideBar';
 import Navbar from '../../organisms/Navbar/Navbar';
-import {Outlet, useLocation} from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 
 import './Dashboard.scss';
 
@@ -39,21 +39,18 @@ const sideBarInfo = [
 ];
 
 const Dashboard = () => {
-  const location = useLocation ();
-  const [activeTab, setActiveTab] = useState (0);
+  const location = useLocation();
+  const [activeTab, setActiveTab] = useState(0);
 
-  useEffect (
-    () => {
-      const currentTabIndex = sideBarInfo.findIndex (
-        item => item.path === location.pathname
-      );
-      setActiveTab (currentTabIndex !== -1 ? currentTabIndex : 0);
-    },
-    [location]
-  );
+  useEffect(() => {
+    const currentTabIndex = sideBarInfo.findIndex(
+      (item) => item.path === location.pathname
+    );
+    setActiveTab(currentTabIndex !== -1 ? currentTabIndex : 0);
+  }, [location]);
 
-  const handleTabChange = index => {
-    setActiveTab (index);
+  const handleTabChange = (index) => {
+    setActiveTab(index);
   };
 
   return (
