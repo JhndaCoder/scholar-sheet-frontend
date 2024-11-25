@@ -1,0 +1,11 @@
+echo '🏗️👷 Styling and linting your staged files before committing...'
+
+# Run lint-staged for staged files
+npx lint-staged || {
+    echo '💥🛑 Oh no! Something went wrong. 💥🛑'
+    echo '🔴🔴🔴 Please fix the issues in the staged files and try again. 🔴🔴🔴'
+    exit 1
+}
+
+# Success message if all checks pass
+echo '✅✅✅ All staged files look great! Committing your changes now. ✅✅✅'
