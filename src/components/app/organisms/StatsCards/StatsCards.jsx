@@ -1,10 +1,35 @@
 import { useGetCardStats } from './../../../../hooks/useAdminStatsHooks';
 import { useFetchResearcherCardStats } from '../../../../hooks/useResearcherStatsHooks';
-import { useParams } from 'react-router-dom';
+import Spinner from '../../../common/Spinner/Spinner';
 import './StatsCards.scss';
 
-const StatsCards = () => {
-  const { scholarId } = useParams();
+const StatCard = ({ isLoading, icon, growth, title, value, subtext }) => {
+  return (
+    <div className="card">
+      {isLoading ? (
+        <Spinner radius="3rem" />
+      ) : (
+        <>
+          <div className="card-header">
+            <span className="material-symbols-outlined icon">{icon}</span>
+            {growth && (
+              <p
+                className={`growth ${growth.includes('decrease') ? 'negative' : 'positive'}`}
+              >
+                {growth}
+              </p>
+            )}
+          </div>
+          <h4>{title}</h4>
+          <p className="card-value">{value}</p>
+          <p className="card-subtext">{subtext}</p>
+        </>
+      )}
+    </div>
+  );
+};
+
+const StatsCards = ({ scholarId }) => {
   const {
     data: generalData,
     isLoading: isGeneralLoading,
@@ -20,51 +45,37 @@ const StatsCards = () => {
   const data = scholarId ? researcherData : generalData;
   const error = scholarId ? researcherError : generalError;
 
-  if (isLoading) return <p>Loading stats...</p>;
   if (error) return <p>Error loading stats: {error.message}</p>;
 
-  const { citations, publications, totalResearchers } = data;
+  const citations = data?.citations || {};
+  const publications = data?.publications || {};
+  const totalResearchers = data?.totalResearchers || null;
 
   return (
     <div className="stats-cards">
-      <div className="card">
-        <div className="card-header">
-          <span className="material-symbols-outlined icon">format_quote</span>
-          <p
-            className={`growth ${citations.growth.includes('decrease') ? 'negative' : 'positive'}`}
-          >
-            {citations.growth}
-          </p>
-        </div>
-        <h4>Total Citations</h4>
-        <p className="card-value">{citations['2024']}</p>
-        <p className="card-subtext">compared to {citations['2023']} in 2023</p>
-      </div>
-
-      <div className="card">
-        <div className="card-header">
-          <span className="material-symbols-outlined icon">library_books</span>
-          <p
-            className={`growth ${publications.growth.includes('decrease') ? 'negative' : 'positive'}`}
-          >
-            {publications.growth}
-          </p>
-        </div>
-        <h4>Total Publications</h4>
-        <p className="card-value">{publications['2024']}</p>
-        <p className="card-subtext">
-          compared to {publications['2023']} in 2023
-        </p>
-      </div>
-
-      <div className="card">
-        <div className="card-header">
-          <span className="material-symbols-outlined icon">group</span>
-        </div>
-        <h4>Total Researchers</h4>
-        <p className="card-value">{totalResearchers}</p>
-        <p className="card-subtext">compared to last year</p>
-      </div>
+      <StatCard
+        isLoading={isLoading}
+        icon="format_quote"
+        growth={citations.growth}
+        title="Total Citations"
+        value={citations['2024']}
+        subtext={`compared to ${citations['2023']} in 2023`}
+      />
+      <StatCard
+        isLoading={isLoading}
+        icon="library_books"
+        growth={publications.growth}
+        title="Total Publications"
+        value={publications['2024']}
+        subtext={`compared to ${publications['2023']} in 2023`}
+      />
+      <StatCard
+        isLoading={isLoading}
+        icon="group"
+        title="Total Researchers"
+        value={totalResearchers}
+        subtext="compared to last year"
+      />
     </div>
   );
 };

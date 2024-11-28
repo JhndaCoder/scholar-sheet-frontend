@@ -3,6 +3,7 @@ import { useInView } from 'react-intersection-observer';
 import { useGetAllResearchers } from '../../../../hooks/useAdminHooks';
 import { useGetDepartments } from '../../../../hooks/useAdminStatsHooks';
 import { useDepartment } from '../../../../context/DepartmentContext';
+import Spinner from '../../../common/Spinner/Spinner';
 import './AllResearchers.scss';
 
 const AllResearchers = () => {
@@ -157,7 +158,10 @@ const AllResearchers = () => {
             </div>
             <div className="researcher-info">
               <a
-                href={`https://scholar.google.co.in/citations?user=${researcher.scholar_id}&hl=en`}
+                href={
+                  window.location.origin +
+                  `/researcher/${researcher.scholar_id}`
+                }
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -173,7 +177,7 @@ const AllResearchers = () => {
           </div>
         ))}
       </div>
-      {isLoading && <p>Loading more researchers...</p>}
+      {isLoading && <Spinner />}
       <div ref={ref}></div>
     </div>
   );

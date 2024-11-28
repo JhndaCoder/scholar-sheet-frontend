@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { useGetStatsForYearRange } from './../../../../hooks/useAdminStatsHooks';
 import { useDepartment } from '../../../../context/DepartmentContext';
 import './YearRangeStats.scss';
+import Spinner from '../../../common/Spinner/Spinner';
 
 const YearRangeStats = () => {
   const { selectedDepartment } = useDepartment();
@@ -74,7 +75,7 @@ const YearRangeStats = () => {
         </div>
       </div>
       {errorMessage && <p className="error-message">{errorMessage}</p>}
-      {isLoading && <p>Loading yearly stats...</p>}
+      {isLoading && <Spinner />}
       {error && <p>Error loading yearly stats: {error.message}</p>}
       {data && (
         <div className="stats-cards">

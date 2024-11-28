@@ -2,6 +2,7 @@ import { useState, useMemo, useCallback } from 'react';
 import { useGetTopPublications } from '../../../../hooks/useAdminStatsHooks';
 import { useDepartment } from '../../../../context/DepartmentContext';
 import { useGetPreFilterData } from '../../../../hooks/useAdminStatsHooks';
+import Spinner from '../../../common/Spinner/Spinner';
 import './TopPublications.scss';
 
 const TopPublications = () => {
@@ -165,7 +166,7 @@ const TopPublications = () => {
   );
 
   if (isLoading) {
-    return <p>Loading top publications...</p>;
+    return <Spinner />;
   }
 
   if (isError) {

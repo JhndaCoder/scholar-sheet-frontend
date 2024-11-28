@@ -20,6 +20,10 @@ const AddFaculty = lazy(
   () => import('./components/app/pages/AddFaculty/AddFaculty')
 );
 
+const Researcher = lazy(
+  () => import('./components/app/pages/Researcher/Researcher')
+);
+
 import Report from './components/app/pages/Reports/Report';
 
 import Dashboard from './components/app/pages/Dashboard/Dashboard';
@@ -81,6 +85,14 @@ const router = createBrowserRouter([
         element: <AddFaculty />,
       },
     ],
+  },
+  {
+    path: '/researcher/:id',
+    element: (
+      <ProtectedRoute>
+        <Researcher />
+      </ProtectedRoute>
+    ),
   },
   {
     path: '*',

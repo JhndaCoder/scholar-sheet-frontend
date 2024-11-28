@@ -1,0 +1,26 @@
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.loading {
+  border: 5px solid #64748b;
+  border-top-color: #3099ea;
+  border-radius: 50%;
+  animation: spinner 0.6s linear infinite;
+}
+
+.loading.small {
+  width: 2rem;
+  height: 2rem;
+  border-width: 3px;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
