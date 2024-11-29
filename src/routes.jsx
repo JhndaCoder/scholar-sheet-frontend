@@ -28,6 +28,7 @@ import Report from './components/app/pages/Reports/Report';
 
 import Dashboard from './components/app/pages/Dashboard/Dashboard';
 import AllResearchers from './components/app/organisms/AllResearchers/AllResearchers';
+import ErrorElement from './components/common/Error/ErrorElement';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -41,6 +42,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Auth />,
+    errorElement: <ErrorElement />,
     children: [
       {
         index: true,
@@ -55,10 +57,12 @@ const router = createBrowserRouter([
   {
     element: <VerificationPending />,
     path: 'verification-pending',
+    errorElement: <ErrorElement />,
   },
   {
     path: '/verify-email',
     element: <VerifyEmail />,
+    errorElement: <ErrorElement />,
   },
   {
     path: '/home',
@@ -67,6 +71,7 @@ const router = createBrowserRouter([
         <Dashboard />
       </ProtectedRoute>
     ),
+    errorElement: <ErrorElement />,
     children: [
       {
         index: true,
@@ -93,6 +98,7 @@ const router = createBrowserRouter([
         <Researcher />
       </ProtectedRoute>
     ),
+    errorElement: <ErrorElement />,
   },
   {
     path: '*',
