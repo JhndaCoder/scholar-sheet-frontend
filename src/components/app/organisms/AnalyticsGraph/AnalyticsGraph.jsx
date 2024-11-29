@@ -13,6 +13,7 @@ const AnalyticsGraph = ({ scholarId }) => {
 
   const [criteria, setCriteria] = useState('totalPapers');
   const [chartType, setChartType] = useState('Line');
+  const [cumulative, setCumulative] = useState(false);
 
   const { data: departments, isLoading: isDepartmentsLoading } =
     useGetDepartments();
@@ -33,7 +34,23 @@ const AnalyticsGraph = ({ scholarId }) => {
   const data = scholarId ? researcherData : generalData;
   const error = scholarId ? researcherError : generalError;
 
-  const chartData = useMemo(() => (data ? transformData(data) : []), [data]);
+  const chartData = useMemo(() => {
+    if (!data) return [];
+    const transformedData = transformData(data);
+
+    if (cumulative) {
+      let cumulativeSum = 0;
+      return transformedData.map((item) => {
+        cumulativeSum += item.value;
+        return {
+          ...item,
+          value: cumulativeSum,
+        };
+      });
+    }
+
+    return transformedData;
+  }, [data, cumulative]);
 
   const handleCriteriaChange = (e) => {
     setCriteria(e.target.value);
@@ -45,6 +62,10 @@ const AnalyticsGraph = ({ scholarId }) => {
 
   const handleDepartmentChange = (e) => {
     setSelectedDepartment(e.target.value);
+  };
+
+  const handleCumulativeToggle = () => {
+    setCumulative((prev) => !prev);
   };
 
   return (
@@ -82,6 +103,15 @@ const AnalyticsGraph = ({ scholarId }) => {
                 ))}
               </select>
             )}
+          </label>
+
+          <label className="cumulative-toggle">
+            <span>Cumulative</span>
+            <input
+              type="checkbox"
+              checked={cumulative}
+              onChange={handleCumulativeToggle}
+            />
           </label>
         </div>
       </header>

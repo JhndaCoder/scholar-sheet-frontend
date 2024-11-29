@@ -74,7 +74,7 @@ const StatsCards = ({ scholarId }) => {
         icon="group"
         title="Total Researchers"
         value={totalResearchers}
-        subtext="compared to last year"
+        // subtext="compared to last year"
       />
     </div>
   );

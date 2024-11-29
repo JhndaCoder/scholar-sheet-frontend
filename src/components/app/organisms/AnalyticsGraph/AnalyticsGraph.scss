@@ -36,6 +36,12 @@
       font-size: 1rem;
       font-style: normal;
       font-weight: 600;
+
+      input[type='checkbox'] {
+        accent-color: #3099ea;
+        cursor: pointer;
+        background-color: #f9f9f9;
+      }
     }
 
     select {
@@ -48,11 +54,40 @@
       font-size: 1rem;
       font-style: normal;
       font-weight: 600;
+      background-color: #f9f9f9;
+      transition: all 0.3s;
+
+      &:focus {
+        border-color: #3099ea;
+        outline: none;
+        box-shadow: 0 0 5px rgba(48, 153, 234, 0.5);
+      }
     }
 
     option {
       color: #363636;
       background-color: #f3f6fd;
+    }
+  }
+
+  .cumulative-toggle {
+    display: flex;
+    flex-direction: row !important;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid #ddd;
+    margin-top: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    font-size: 1rem;
+    font-weight: 600;
+
+    span {
+      font-size: 1rem;
+      color: #9a9a9a;
+      font-weight: 600;
     }
   }
 }
