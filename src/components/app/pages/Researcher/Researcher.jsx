@@ -19,9 +19,9 @@ const Researcher = () => {
         <StatsCards scholarId={id} />
         <YearRangeStats scholarId={id} />
         <AnalyticsGraph scholarId={id} />
-        <TopResearchers />
-        <ResearchTopicsChart />
-        <JournalDiversityChart />
+        <TopResearchers scholarId={id} />
+        <ResearchTopicsChart scholarId={id} />
+        <JournalDiversityChart scholarId={id} />
         <TopPublications />
       </div>
     </Fragment>

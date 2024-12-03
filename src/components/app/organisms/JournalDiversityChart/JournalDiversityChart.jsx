@@ -1,19 +1,32 @@
 import { useState } from 'react';
 import { useGetJournalDiversity } from '../../../../hooks/useAdminStatsHooks';
+import { useFetchResearcherJournalDiversity } from '../../../../hooks/useResearcherStatsHooks';
 import { useDepartment } from '../../../../context/DepartmentContext';
 import PieChartComponent from '../../../common/PieChartComponent/PieChartComponent';
 import './JournalDiversityChart.scss';
+import Spinner from '../../../common/Spinner/Spinner';
 
-const JournalDiversityChart = () => {
+const JournalDiversityChart = ({ scholarId }) => {
   const currentYear = new Date().getFullYear();
   const { selectedDepartment } = useDepartment();
   const [year, setYear] = useState(currentYear);
   const [chartType, setChartType] = useState('Pie');
 
-  const { data, isLoading, error } = useGetJournalDiversity(
-    selectedDepartment,
-    year
-  );
+  const {
+    data: adminData,
+    isLoading: isAdminLoading,
+    error: adminError,
+  } = useGetJournalDiversity(selectedDepartment, year);
+
+  const {
+    data: researcherData,
+    isLoading: isResearcherLoading,
+    error: researcherError,
+  } = useFetchResearcherJournalDiversity(scholarId, year);
+
+  const isLoading = scholarId ? isResearcherLoading : isAdminLoading;
+  const data = scholarId ? researcherData : adminData;
+  const error = scholarId ? researcherError : adminError;
 
   const handleYearChange = (e) => {
     setYear(e.target.value);
@@ -41,6 +54,7 @@ const JournalDiversityChart = () => {
         <div className="chart-controls">
           <div className="selector">
             <label>
+              Year:
               <select value={year} onChange={handleYearChange}>
                 {[...Array(10).keys()].map((offset) => (
                   <option key={offset} value={currentYear - offset}>
@@ -53,6 +67,7 @@ const JournalDiversityChart = () => {
 
           <div className="selector">
             <label>
+              Chart Type:
               <select value={chartType} onChange={handleChartTypeChange}>
                 <option value="Pie">Pie Chart</option>
               </select>
@@ -62,7 +77,7 @@ const JournalDiversityChart = () => {
       </header>
 
       {isLoading ? (
-        <p>Loading chart data...</p>
+        <Spinner />
       ) : error ? (
         <p>Error loading data: {error.message}</p>
       ) : (

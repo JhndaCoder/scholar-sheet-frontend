@@ -67,7 +67,7 @@ export const useFetchResearcherTopics = (scholarId, year) => {
     queryKey: ['researcher/topics', scholarId, year],
     queryFn: async () => {
       const { data } = await customFetch(
-        `/researcher-stats/research-topics?scholar_id=${scholarId}${year ? `&year=${year}` : ''}`
+        `/researcher/stats/research-topics?scholar_id=${scholarId}${year ? `&year=${year}` : ''}`
       );
       return data;
     },

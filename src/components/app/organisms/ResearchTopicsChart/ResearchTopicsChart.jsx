@@ -1,19 +1,31 @@
 import { useState } from 'react';
 import { useGetResearchTopics } from '../../../../hooks/useAdminStatsHooks';
+import { useFetchResearcherTopics } from '../../../../hooks/useResearcherStatsHooks';
 import { useDepartment } from '../../../../context/DepartmentContext';
 import PieChartComponent from '../../../common/PieChartComponent/PieChartComponent';
 import './ResearchTopicsChart.scss';
 
-const ResearchTopicsChart = () => {
+const ResearchTopicsChart = ({ scholarId }) => {
   const currentYear = new Date().getFullYear();
   const { selectedDepartment } = useDepartment();
   const [year, setYear] = useState(currentYear);
   const [chartType, setChartType] = useState('Pie');
 
-  const { data, isLoading, error } = useGetResearchTopics(
-    selectedDepartment,
-    year
-  );
+  const {
+    data: adminData,
+    isLoading: isAdminLoading,
+    error: adminError,
+  } = useGetResearchTopics(selectedDepartment, year);
+
+  const {
+    data: researcherData,
+    isLoading: isResearcherLoading,
+    error: researcherError,
+  } = useFetchResearcherTopics(scholarId, year);
+
+  const isLoading = scholarId ? isResearcherLoading : isAdminLoading;
+  const data = scholarId ? researcherData : adminData;
+  const error = scholarId ? researcherError : adminError;
 
   const handleYearChange = (e) => {
     setYear(e.target.value);

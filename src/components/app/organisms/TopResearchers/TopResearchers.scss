@@ -86,12 +86,20 @@
 
 .researcher-info {
   flex-grow: 1;
+  a {
+    all: unset;
+  }
   h4 {
     color: #000;
     font-family: Inter;
     font-size: 1rem;
     font-style: normal;
     font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
   p {
     color: #766f6f;

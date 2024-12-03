@@ -1,21 +1,30 @@
 import { useState } from 'react';
 import { useGetTopResearchers } from '../../../../hooks/useAdminStatsHooks';
+import { useFetchTopResearchersInDepartment } from '../../../../hooks/useResearcherStatsHooks';
 import { useDepartment } from '../../../../context/DepartmentContext';
 import './TopResearchers.scss';
 
-const TopResearchers = () => {
+const TopResearchers = ({ scholarId }) => {
   const { selectedDepartment } = useDepartment();
 
   const [criteria, setCriteria] = useState('totalCitations');
   const [year, setYear] = useState(new Date().getFullYear());
 
-  const { data, isLoading, error } = useGetTopResearchers(
-    selectedDepartment,
-    criteria,
-    year,
-    1,
-    5
-  );
+  const {
+    data: adminData,
+    isLoading: isAdminLoading,
+    error: adminError,
+  } = useGetTopResearchers(selectedDepartment, criteria, year, 1, 5);
+
+  const {
+    data: researcherData,
+    isLoading: isResearcherLoading,
+    error: researcherError,
+  } = useFetchTopResearchersInDepartment(scholarId, criteria, 1, 5);
+
+  const isLoading = scholarId ? isResearcherLoading : isAdminLoading;
+  const data = scholarId ? researcherData : adminData;
+  const error = scholarId ? researcherError : adminError;
 
   const handleCriteriaChange = (e) => {
     setCriteria(e.target.value);
@@ -31,7 +40,7 @@ const TopResearchers = () => {
   return (
     <div className="top-researchers-container">
       <div className="header">
-        <h3>Top Researchers</h3>
+        <h3>Top Researchers {scholarId ? 'in your department' : ''}</h3>
         <div className="dropdowns">
           <div className="selector">
             <label>
@@ -39,7 +48,7 @@ const TopResearchers = () => {
                 <option value="totalCitations">Total Citations</option>
                 <option value="totalPapers">Total Papers</option>
                 <option value="hIndex">H-Index</option>
-                <option value="i10index">i10-Index</option>
+                <option value="i10Index">i10-Index</option>
               </select>
             </label>
           </div>
@@ -58,7 +67,7 @@ const TopResearchers = () => {
       </div>
 
       <ul className="researcher-list">
-        {data.researchers.map((researcher, index) => (
+        {data?.researchers.map((researcher, index) => (
           <li key={index} className="researcher-item">
             <div className="researcher-avatar">
               <img
@@ -67,12 +76,21 @@ const TopResearchers = () => {
               />
             </div>
             <div className="researcher-info">
-              <h4>{researcher.name}</h4>
+              <a
+                href={
+                  window.location.origin +
+                  `/researcher/${researcher.scholar_id}`
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <h4>{researcher.name}</h4>
+              </a>
+
               <p className="researcher-department">{researcher.department}</p>
             </div>
             <div className="researcher-stats">
               <span>{researcher[criteria]}</span>
-              {/* <p className="growth">{index % 2 === 0 ? '+0.43%' : '-0.23%'}</p> */}
             </div>
           </li>
         ))}
