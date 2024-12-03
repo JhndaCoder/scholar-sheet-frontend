@@ -1,0 +1,68 @@
+.researcher-header-container {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  background-color: #ffffff;
+  border-radius: 11px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 20px;
+}
+
+.researcher-header-left {
+  margin-right: 20px;
+
+  .researcher-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #eaeaea;
+  }
+}
+
+.researcher-header-right {
+  flex: 1;
+
+  .researcher-name {
+    color: #2b2b2d;
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .researcher-position {
+    color: #acadb1;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-top: 5px;
+  }
+
+  .researcher-affiliation {
+    color: #8a8b8d;
+    font-size: 0.875rem;
+    margin-top: 5px;
+  }
+
+  .researcher-email {
+    color: #30a5ff;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-top: 5px;
+  }
+
+  .researcher-tags {
+    margin-top: 10px;
+
+    .researcher-tag {
+      display: inline-block;
+      background-color: #e5f6ff;
+      color: #30a5ff;
+      padding: 5px 10px;
+      margin-right: 8px;
+      border-radius: 15px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+  }
+}
