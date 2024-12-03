@@ -3,6 +3,8 @@ import {
   Line,
   BarChart,
   Bar,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -34,7 +36,7 @@ const ChartComponent = ({ title, data, dataKeys, lineColors, chartType }) => {
               />
             ))}
           </LineChart>
-        ) : (
+        ) : chartType === 'Bar' ? (
           <BarChart data={data}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="year" />
@@ -50,6 +52,26 @@ const ChartComponent = ({ title, data, dataKeys, lineColors, chartType }) => {
               />
             ))}
           </BarChart>
+        ) : chartType === 'Area' ? (
+          <AreaChart data={data}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="year" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            {dataKeys.map((key, index) => (
+              <Area
+                key={index}
+                type="monotone"
+                dataKey={key}
+                stroke={lineColors[index]}
+                fill={lineColors[index]}
+                name={key}
+              />
+            ))}
+          </AreaChart>
+        ) : (
+          <p>Invalid chart type</p>
         )}
       </ResponsiveContainer>
     </div>

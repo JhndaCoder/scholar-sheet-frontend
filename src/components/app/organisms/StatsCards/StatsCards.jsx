@@ -50,6 +50,7 @@ const StatsCards = ({ scholarId }) => {
   const citations = data?.citations || {};
   const publications = data?.publications || {};
   const totalResearchers = data?.totalResearchers || null;
+  const totalPapers = data?.totalPapers || null;
 
   return (
     <div className="stats-cards">
@@ -69,13 +70,21 @@ const StatsCards = ({ scholarId }) => {
         value={publications['2024']}
         subtext={`compared to ${publications['2023']} in 2023`}
       />
-      <StatCard
-        isLoading={isLoading}
-        icon="group"
-        title="Total Researchers"
-        value={totalResearchers}
-        // subtext="compared to last year"
-      />
+      {scholarId ? (
+        <StatCard
+          isLoading={isLoading}
+          icon="docs"
+          title="Total Papers Published"
+          value={totalPapers}
+        ></StatCard>
+      ) : (
+        <StatCard
+          isLoading={isLoading}
+          icon="group"
+          title="Total Researchers"
+          value={totalResearchers}
+        />
+      )}
     </div>
   );
 };

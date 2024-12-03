@@ -1,10 +1,11 @@
 import { useState, useCallback } from 'react';
 import { useGetStatsForYearRange } from './../../../../hooks/useAdminStatsHooks';
+import { useFetchResearcherStatsForYearRange } from '../../../../hooks/useResearcherStatsHooks';
 import { useDepartment } from '../../../../context/DepartmentContext';
 import './YearRangeStats.scss';
 import Spinner from '../../../common/Spinner/Spinner';
 
-const YearRangeStats = () => {
+const YearRangeStats = ({ scholarId }) => {
   const { selectedDepartment } = useDepartment();
   const [startYear, setStartYear] = useState('');
   const [endYear, setEndYear] = useState('');
@@ -14,11 +15,29 @@ const YearRangeStats = () => {
   });
   const [errorMessage, setErrorMessage] = useState('');
 
-  const { isLoading, data, error } = useGetStatsForYearRange(
+  const {
+    isLoading: isAdminLoading,
+    data: adminData,
+    error: adminError,
+  } = useGetStatsForYearRange(
     appliedRange.startYear,
     appliedRange.endYear,
     selectedDepartment
   );
+
+  const {
+    isLoading: isResearcherLoading,
+    data: researcherData,
+    error: researcherError,
+  } = useFetchResearcherStatsForYearRange(
+    appliedRange.startYear,
+    appliedRange.endYear,
+    scholarId
+  );
+
+  const isLoading = scholarId ? isResearcherLoading : isAdminLoading;
+  const data = scholarId ? researcherData : adminData;
+  const error = scholarId ? researcherError : adminError;
 
   const validateInputsAndSetRange = useCallback(() => {
     let start = parseInt(startYear, 10);
@@ -47,6 +66,12 @@ const YearRangeStats = () => {
     }
   };
 
+  const handleEnter = (e) => {
+    if (e.key === 'Enter') {
+      handleGenerateStats();
+    }
+  };
+
   return (
     <div className="year-range-stats">
       <h3>Generate Yearly Stats</h3>
@@ -60,6 +85,7 @@ const YearRangeStats = () => {
             value={startYear}
             onChange={(e) => setStartYear(e.target.value)}
             placeholder="Start year e.g., 2020"
+            onKeyDown={handleEnter}
           />
         </label>
         <label>
@@ -68,6 +94,7 @@ const YearRangeStats = () => {
             value={endYear}
             onChange={(e) => setEndYear(e.target.value)}
             placeholder="End year e.g., 2024"
+            onKeyDown={handleEnter}
           />
         </label>
         <div className="filter-buttons">
@@ -99,7 +126,7 @@ const YearRangeStats = () => {
           </div>
           <div className="card">
             <h4>i10-Index</h4>
-            <p className="card-value">{data.i10index}</p>
+            <p className="card-value">{data.i10Index}</p>
             <p className="card-subtext">Papers with 10+ citations</p>
           </div>
         </div>

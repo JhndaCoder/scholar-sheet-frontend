@@ -123,3 +123,24 @@ export const useFetchTopResearcherPublications = (
   });
   return { isLoading, data, error, isError };
 };
+
+export const useFetchResearcherStatsForYearRange = (
+  startYear,
+  endYear,
+  scholarId
+) => {
+  const { isLoading, data, error, isError } = useQuery({
+    queryKey: ['researcher-stats-year-range', startYear, endYear, scholarId],
+    queryFn: async () => {
+      if (!startYear || !endYear) {
+        throw new Error('Start year and end year are required');
+      }
+      const { data } = await customFetch.get(
+        `/researcher/stats/year-range?startYear=${startYear}&endYear=${endYear}&scholar_id=${scholarId}`
+      );
+      return data;
+    },
+    enabled: !!startYear && !!endYear && !!scholarId,
+  });
+  return { isLoading, data, error, isError };
+};

@@ -113,6 +113,12 @@ const TopPublications = () => {
     setPage(1);
   }, []);
 
+  const handleEnter = (e) => {
+    if (e.key == 'Enter') {
+      applyFilters();
+    }
+  };
+
   const handlePageChange = (newPage) => {
     setPage(newPage);
   };
@@ -192,6 +198,7 @@ const TopPublications = () => {
             onChange={handleInputChange}
             onBlur={applyYearFilter}
             list="year-options"
+            onKeyDown={handleEnter}
           />
           {preFilterData && (
             <datalist id="year-options">
@@ -211,6 +218,7 @@ const TopPublications = () => {
             value={filters.journal.join(',')}
             onChange={handleInputChange}
             list="journal-options"
+            onKeyDown={handleEnter}
           />
           {preFilterData && (
             <datalist id="journal-options">
@@ -228,6 +236,7 @@ const TopPublications = () => {
             value={filters.author.join(',')}
             onChange={handleInputChange}
             list="author-options"
+            onKeyDown={handleEnter}
           />
           {preFilterData && (
             <datalist id="author-options">
@@ -244,6 +253,7 @@ const TopPublications = () => {
             name="topic"
             value={filters.topic.join(',')}
             onChange={handleInputChange}
+            onKeyDown={handleEnter}
             list="topic-options"
           />
           {preFilterData && (
@@ -278,6 +288,7 @@ const TopPublications = () => {
             placeholder="Enter range, e.g., 0,100"
             value={filters.citationsRange.join(',')}
             onChange={handleCitationsRangeChange}
+            onKeyDown={handleEnter}
           />
         </label>
         <div className="filter-buttons">

@@ -77,6 +77,7 @@ const AnalyticsGraph = ({ scholarId }) => {
             <select value={chartType} onChange={handleChartTypeChange}>
               <option value="Line">Line Chart</option>
               <option value="Bar">Bar Chart</option>
+              <option value="Area">Area Chart</option>
             </select>
           </label>
 
@@ -87,23 +88,25 @@ const AnalyticsGraph = ({ scholarId }) => {
             </select>
           </label>
 
-          <label>
-            {isDepartmentsLoading ? (
-              <Spinner small={true} />
-            ) : (
-              <select
-                value={selectedDepartment}
-                onChange={handleDepartmentChange}
-              >
-                <option value="">All Departments</option>
-                {departments?.departments?.map((dept, index) => (
-                  <option key={index} value={dept}>
-                    {dept}
-                  </option>
-                ))}
-              </select>
-            )}
-          </label>
+          {!scholarId ? (
+            <label>
+              {isDepartmentsLoading ? (
+                <Spinner small={true} />
+              ) : (
+                <select
+                  value={selectedDepartment}
+                  onChange={handleDepartmentChange}
+                >
+                  <option value="">All Departments</option>
+                  {departments?.departments?.map((dept, index) => (
+                    <option key={index} value={dept}>
+                      {dept}
+                    </option>
+                  ))}
+                </select>
+              )}
+            </label>
+          ) : null}
 
           <label className="cumulative-toggle">
             <span>Cumulative</span>
