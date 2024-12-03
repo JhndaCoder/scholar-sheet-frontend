@@ -139,7 +139,11 @@ const AllResearchers = () => {
             <option value="-totalPapers">Total Papers Descending</option>
           </select>
         </label>
-        <button onClick={resetFilters}>Reset Filters</button>
+        <div className="reset">
+          <button className="reset-button" onClick={resetFilters}>
+            Reset Filters
+          </button>
+        </div>
       </div>
       <div className="researcher-cards">
         {researchers.map((researcher, index) => (
@@ -164,10 +168,11 @@ const AllResearchers = () => {
                 }
                 target="_blank"
                 rel="noopener noreferrer"
+                className="researcher-name-link"
               >
-                <h4>{researcher.name}</h4>
+                <h4 className="researcher-name">{researcher.name}</h4>
               </a>
-              <p>{researcher.department}</p>
+              <p className="researcher-department">{researcher.department}</p>
               <div className="stats">
                 <p>H-Index: {researcher.h_index}</p>
                 <p>i10-Index: {researcher.i_index}</p>
