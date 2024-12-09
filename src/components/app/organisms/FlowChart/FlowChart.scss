@@ -1,0 +1,31 @@
+#scholarFlowchart {
+  width: 210mm; /* A4 width */
+  height: 297mm; /* A4 height */
+  padding: 10mm; /* Add some padding for readability */
+  box-sizing: border-box;
+  border: 1px solid #3099ea;
+  border-radius: 10px;
+  overflow: hidden; /* Prevent overflowing content */
+  background-color: #f9f9f9;
+}
+
+.mermaid {
+  width: 100%; /* Full width of the container */
+  height: 100%; /* Full height of the container */
+  transform: scale(0.9); /* Scale down slightly to leave some margin */
+  transform-origin: top left; /* Keep the scaling aligned to the top-left corner */
+}
+
+@media print {
+  #scholarFlowchart {
+    width: 210mm;
+    height: 297mm;
+    margin: 0;
+    padding: 10mm;
+    border: none;
+  }
+  .mermaid {
+    transform: scale(1);
+    transform-origin: top left;
+  }
+}

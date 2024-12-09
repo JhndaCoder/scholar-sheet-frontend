@@ -4,6 +4,7 @@ import { useFetchResearcherTopics } from '../../../../hooks/useResearcherStatsHo
 import { useDepartment } from '../../../../context/DepartmentContext';
 import PieChartComponent from '../../../common/PieChartComponent/PieChartComponent';
 import './ResearchTopicsChart.scss';
+import Spinner from '../../../common/Spinner/Spinner';
 
 const ResearchTopicsChart = ({ scholarId }) => {
   const currentYear = new Date().getFullYear();
@@ -76,7 +77,7 @@ const ResearchTopicsChart = ({ scholarId }) => {
       </header>
 
       {isLoading ? (
-        <p>Loading chart data...</p>
+        <Spinner />
       ) : error ? (
         <p>Error loading data: {error.message}</p>
       ) : (

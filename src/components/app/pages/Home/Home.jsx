@@ -15,6 +15,8 @@ const Home = () => {
   useEffect(() => {
     const home = document.querySelector('.main-home');
     if (home) {
+      console.log(home);
+
       setMainHomeContent(home.outerHTML);
     }
   }, [setMainHomeContent]);

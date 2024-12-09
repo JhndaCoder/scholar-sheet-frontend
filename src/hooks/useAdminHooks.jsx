@@ -119,3 +119,42 @@ export const useAddDepartments = () => {
 
   return { addDepartments, isLoading, error, isError, isSuccess };
 };
+
+export const useBulkUploadResearchers = () => {
+  const queryClient = useQueryClient();
+
+  const {
+    mutate: bulkUploadResearchers,
+    isLoading,
+    error,
+    isError,
+    isSuccess,
+    data: response,
+  } = useMutation({
+    mutationFn: (file) => {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      return customFetch.post('/admin/researcher/bulk-upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['researchers']);
+    },
+    onError: (err) => {
+      console.error('Error during bulk upload:', err);
+    },
+  });
+
+  return {
+    bulkUploadResearchers,
+    isLoading,
+    error,
+    isError,
+    isSuccess,
+    response,
+  };
+};

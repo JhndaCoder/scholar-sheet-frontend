@@ -10,7 +10,7 @@ export const useSignIn = () => {
     isSuccess,
   } = useMutation({
     mutationFn: async (signInData) => {
-      const response = await customFetch.post('/admin/signin', signInData);
+      const response = await customFetch.post('/admin/signup', signInData);
       return response.data;
     },
     onError: () => {

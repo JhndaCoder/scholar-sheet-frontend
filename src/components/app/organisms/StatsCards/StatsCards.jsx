@@ -74,7 +74,7 @@ const StatsCards = ({ scholarId }) => {
         <StatCard
           isLoading={isLoading}
           icon="docs"
-          title="Total Papers Published"
+          title="Total Publications till now"
           value={totalPapers}
         ></StatCard>
       ) : (

@@ -126,7 +126,9 @@ const YearRangeStats = ({ scholarId }) => {
           </div>
           <div className="card">
             <h4>i10-Index</h4>
-            <p className="card-value">{data.i10Index}</p>
+            <p className="card-value">
+              {data.i10index ? data.i10index : data.i10Index}
+            </p>
             <p className="card-subtext">Papers with 10+ citations</p>
           </div>
         </div>

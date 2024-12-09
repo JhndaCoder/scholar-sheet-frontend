@@ -24,6 +24,10 @@ const Researcher = lazy(
   () => import('./components/app/pages/Researcher/Researcher')
 );
 
+const FlowChart = lazy(
+  () => import('./components/app/organisms/FlowChart/FlowChart')
+);
+
 import Report from './components/app/pages/Reports/Report';
 
 import Dashboard from './components/app/pages/Dashboard/Dashboard';
@@ -88,6 +92,10 @@ const router = createBrowserRouter([
       {
         path: 'addFaculty',
         element: <AddFaculty />,
+      },
+      {
+        path: 'settings',
+        element: <FlowChart />,
       },
     ],
   },
