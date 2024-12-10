@@ -144,6 +144,12 @@ const AddFaculty = () => {
   const handlePositionChange = (index, field, value) => {
     const updatedPositions = [...researcherData.positions];
     updatedPositions[index][field] = value;
+
+    if (field === 'current' && value) {
+      // Clear the 'end' field when 'current' is set to true
+      updatedPositions[index].end = '';
+    }
+
     setResearcherData({ ...researcherData, positions: updatedPositions });
   };
 
@@ -232,6 +238,7 @@ const AddFaculty = () => {
                     handlePositionChange(index, 'end', e.target.value)
                   }
                   className="position-input"
+                  disabled={position.current}
                 />
                 <input
                   type="text"
