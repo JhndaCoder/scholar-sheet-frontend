@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useBulkUploadResearchers } from '../../../../hooks/useAdminHooks';
 import {
   useAddDepartments,
@@ -12,7 +12,9 @@ const AddFaculty = () => {
     scholar_id: '',
     email: '',
     department: '',
-    positions: [{ start: '', end: '', position: '', institute: '' }],
+    positions: [
+      { start: '', end: '', position: '', institute: '', current: false },
+    ],
     gender: '',
   });
   const [departmentName, setDepartmentName] = useState('');
@@ -32,6 +34,27 @@ const AddFaculty = () => {
     isError: isResearcherError,
     error: researcherError,
   } = useAddResearcher();
+
+  useEffect(() => {
+    console.log('researcherData', researcherData);
+  }, [researcherData]);
+
+  const formatDateToDDMMYYYY = (dateString) => {
+    const [year, month, day] = dateString.split('-');
+    return `${day}-${month}-${year}`;
+  };
+
+  const formatPositionsDates = (positions) => {
+    return positions.map((position) => {
+      if (position.start) {
+        position.start = formatDateToDDMMYYYY(position.start);
+      }
+      if (position.end) {
+        position.end = formatDateToDDMMYYYY(position.end);
+      }
+      return position;
+    });
+  };
 
   // Handle file drop
   const handleDrop = (e) => {
@@ -79,12 +102,21 @@ const AddFaculty = () => {
       researcherData.email &&
       researcherData.department
     ) {
-      addResearcher(researcherData);
+      const formattedPositions = formatPositionsDates(researcherData.positions);
+
+      const payload = {
+        ...researcherData,
+        positions: formattedPositions,
+      };
+
+      addResearcher(payload);
       setResearcherData({
         scholar_id: '',
         email: '',
         department: '',
-        positions: [{ start: '', end: '', position: '', institute: '' }],
+        positions: [
+          { start: '', end: '', position: '', institute: '', current: false },
+        ],
         gender: '',
       });
     } else {
@@ -102,9 +134,36 @@ const AddFaculty = () => {
     }
   };
 
+  // Handle researcher form field changes
   const handleResearcherChange = (e) => {
     const { name, value } = e.target;
     setResearcherData({ ...researcherData, [name]: value });
+  };
+
+  // Handle position field changes
+  const handlePositionChange = (index, field, value) => {
+    const updatedPositions = [...researcherData.positions];
+    updatedPositions[index][field] = value;
+    setResearcherData({ ...researcherData, positions: updatedPositions });
+  };
+
+  // Add a new position
+  const addPosition = () => {
+    setResearcherData({
+      ...researcherData,
+      positions: [
+        ...researcherData.positions,
+        { start: '', end: '', position: '', institute: '', current: false },
+      ],
+    });
+  };
+
+  // Remove a position
+  const removePosition = (index) => {
+    const updatedPositions = researcherData.positions.filter(
+      (_, i) => i !== index
+    );
+    setResearcherData({ ...researcherData, positions: updatedPositions });
   };
 
   return (
@@ -150,6 +209,71 @@ const AddFaculty = () => {
             <option value="female">Female</option>
             <option value="other">Other</option>
           </select>
+
+          {/* Positions Section */}
+          <div className="positions-container">
+            <h4>Positions</h4>
+            {researcherData.positions.map((position, index) => (
+              <div key={index} className="position-entry">
+                <input
+                  type="date"
+                  placeholder="Start Date"
+                  value={position.start}
+                  onChange={(e) =>
+                    handlePositionChange(index, 'start', e.target.value)
+                  }
+                  className="position-input"
+                />
+                <input
+                  type="date"
+                  placeholder="End Date"
+                  value={position.end}
+                  onChange={(e) =>
+                    handlePositionChange(index, 'end', e.target.value)
+                  }
+                  className="position-input"
+                />
+                <input
+                  type="text"
+                  placeholder="Position"
+                  value={position.position}
+                  onChange={(e) =>
+                    handlePositionChange(index, 'position', e.target.value)
+                  }
+                  className="position-input"
+                />
+                <input
+                  type="text"
+                  placeholder="Institute"
+                  value={position.institute}
+                  onChange={(e) =>
+                    handlePositionChange(index, 'institute', e.target.value)
+                  }
+                  className="position-input"
+                />
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={position.current}
+                    onChange={(e) =>
+                      handlePositionChange(index, 'current', e.target.checked)
+                    }
+                  />
+                  Current Position
+                </label>
+                <button
+                  onClick={() => removePosition(index)}
+                  className="remove-position-button"
+                >
+                  Remove
+                </button>
+              </div>
+            ))}
+            <button onClick={addPosition} className="add-position-button">
+              Add Position
+            </button>
+          </div>
+
           <button
             className="add-researcher-button"
             onClick={handleAddResearcher}

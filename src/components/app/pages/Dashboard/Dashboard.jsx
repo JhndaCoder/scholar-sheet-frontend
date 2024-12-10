@@ -21,16 +21,16 @@ const sideBarInfo = [
     icon: 'group_add',
     path: '/home/addFaculty',
   },
-  {
-    title: 'Rankings',
-    icon: 'insert_chart',
-    path: '/home/rankings',
-  },
-  {
-    title: 'Reports',
-    icon: 'draft',
-    path: '/home/reports',
-  },
+  // {
+  //   title: 'Rankings',
+  //   icon: 'insert_chart',
+  //   path: '/home/rankings',
+  // },
+  // {
+  //   title: 'Reports',
+  //   icon: 'draft',
+  //   path: '/home/reports',
+  // },
   {
     title: 'Settings',
     icon: 'settings',
