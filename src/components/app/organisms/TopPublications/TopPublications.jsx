@@ -332,7 +332,7 @@ const TopPublications = () => {
             <tr key={index}>
               <td>
                 <a
-                  href={publication.publicationLink}
+                  href={publication.pdfLink}
                   target="_blank"
                   rel="noopener noreferrer"
                 >

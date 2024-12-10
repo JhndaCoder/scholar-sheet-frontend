@@ -329,7 +329,7 @@ const AddFaculty = () => {
       </div>
 
       <div className="add-faculty-container">
-        <h3>Add Faculty</h3>
+        <h3>Add Researchers in bulk</h3>
         <p className="subtitle">
           Drag and drop an Excel file or select one to upload faculty members in
           bulk.

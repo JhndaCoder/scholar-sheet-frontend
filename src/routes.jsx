@@ -34,6 +34,7 @@ import Dashboard from './components/app/pages/Dashboard/Dashboard';
 import AllResearchers from './components/app/organisms/AllResearchers/AllResearchers';
 import ErrorElement from './components/common/Error/ErrorElement';
 import RankData from './components/app/pages/RankData/RankData';
+import SearchResults from './components/app/pages/SearchResults/SearchResults';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -101,6 +102,10 @@ const router = createBrowserRouter([
       {
         // path: 'settings',
         // element: <FlowChart />,
+      },
+      {
+        path: 'search/:query',
+        element: <SearchResults />,
       },
     ],
   },
