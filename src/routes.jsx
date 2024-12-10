@@ -33,6 +33,7 @@ import Report from './components/app/pages/Reports/Report';
 import Dashboard from './components/app/pages/Dashboard/Dashboard';
 import AllResearchers from './components/app/organisms/AllResearchers/AllResearchers';
 import ErrorElement from './components/common/Error/ErrorElement';
+import RankData from './components/app/pages/RankData/RankData';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -92,6 +93,10 @@ const router = createBrowserRouter([
       {
         path: 'addFaculty',
         element: <AddFaculty />,
+      },
+      {
+        path: 'rankings',
+        element: <RankData />,
       },
       {
         // path: 'settings',

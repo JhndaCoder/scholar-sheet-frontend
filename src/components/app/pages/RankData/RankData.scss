@@ -1,0 +1,92 @@
+.institute-rankings {
+  width: 100%;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  font-family: Inter;
+
+  h3 {
+    color: #353535;
+    font-family: Inter;
+    font-size: 1.75rem;
+    font-style: normal;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+
+  .subtitle {
+    margin-bottom: 20px;
+    color: #a0a1a4;
+    font-family: Inter;
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  .rankings-filter {
+    display: flex;
+    margin-bottom: 1rem;
+
+    select {
+      border: none;
+      outline: none;
+      font-family: Inter;
+      font-size: 0.875rem;
+      color: #363636;
+      cursor: pointer;
+      background-color: #f3f6fd;
+      padding: 0.5rem 1rem;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+
+    thead {
+      tr {
+        th {
+          color: #8a8b8d;
+          font-family: Inter;
+          font-size: 1rem;
+          font-style: normal;
+          font-weight: 500;
+          padding: 0.75rem;
+          text-align: left;
+          background-color: #f3f4f6;
+          border-bottom: 1px solid #e0e0e0;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        td {
+          color: #676767;
+          font-family: Inter;
+          font-size: 0.875rem;
+          font-style: normal;
+          font-weight: 400;
+          padding: 0.75rem;
+          border-bottom: 1px solid #e0e0e0;
+        }
+
+        &:hover {
+          background-color: #f7faff;
+        }
+
+        &.top-ranked {
+          background-color: #e0f7fa;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}

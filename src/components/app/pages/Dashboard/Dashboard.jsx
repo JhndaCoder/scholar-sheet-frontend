@@ -29,6 +29,11 @@ const sideBarInfo = [
     path: '/home/settings',
   },
   {
+    title: 'Rank Data',
+    icon: 'data_usage',
+    path: '/home/rankings',
+  },
+  {
     title: 'Download Report',
     icon: 'download',
     action: 'download', // Special action for downloading

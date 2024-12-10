@@ -169,13 +169,17 @@ export const useGetTopPublications = (
   return { isLoading, data, error, isError };
 };
 
-export const useGetRankData = () => {
+export const useGetRankData = (criteria = 'citations') => {
   const { isLoading, data, error, isError } = useQuery({
-    queryKey: ['rank-data'],
+    queryKey: ['rank-data', criteria],
     queryFn: async () => {
-      const { data } = await customFetch('/admin/stats/rank');
+      if (!criteria) {
+        throw new Error('Criteria parameter is required');
+      }
+      const { data } = await customFetch.get(`/rank?criteria=${criteria}`);
       return data;
     },
+    enabled: !!criteria,
   });
   return { isLoading, data, error, isError };
 };
