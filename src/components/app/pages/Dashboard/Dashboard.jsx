@@ -43,6 +43,7 @@ const sideBarInfo = [
 const Dashboard = () => {
   const location = useLocation();
   const [activeTab, setActiveTab] = useState(0);
+  const [isDownloading, setIsDownloading] = useState(false); // Loading state
 
   useEffect(() => {
     const currentTabIndex = sideBarInfo.findIndex(
@@ -56,75 +57,117 @@ const Dashboard = () => {
   };
 
   const handleDownloadReport = async () => {
+    if (isDownloading) return;
+
+    setIsDownloading(true);
+
     const content = document.querySelector('.main-content');
-    if (!content) return;
-
-    // Force rendering of the full content
-    const originalStyle = content.style.cssText;
-    content.style.height = 'auto';
-    content.style.overflow = 'visible';
-
-    // Wait for lazy-loaded elements to render
-    await new Promise((resolve) => setTimeout(resolve, 500));
-
-    // Generate canvas from the content
-    const canvas = await html2canvas(content, {
-      useCORS: true, // Allow cross-origin resources
-      scale: 2, // High-resolution
-      allowTaint: true, // Allow images from other domains
-    });
-
-    // Restore the original styles
-    content.style.cssText = originalStyle;
-
-    // Get canvas dimensions
-    // const imgData = canvas.toDataURL ('image/png');
-    const pdf = new jsPDF('p', 'mm', 'a4');
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = pdf.internal.pageSize.getHeight();
-
-    // Calculate the height of the canvas scaled to the PDF's width
-    const canvasWidth = canvas.width;
-    const canvasHeight = canvas.height;
-    const ratio = pdfWidth / canvasWidth;
-    const scaledHeight = canvasHeight * ratio;
-
-    let position = 0;
-    let heightLeft = scaledHeight;
-
-    // Loop through the content, splitting it across multiple pages
-    while (heightLeft > 0) {
-      const sourceY = (position / scaledHeight) * canvasHeight; // Corresponding canvas position
-      const pageCanvas = document.createElement('canvas');
-      pageCanvas.width = canvas.width;
-      pageCanvas.height = (pdfHeight / pdfWidth) * canvas.width; // Page's height in canvas units
-
-      const pageContext = pageCanvas.getContext('2d');
-      pageContext.drawImage(
-        canvas,
-        0,
-        sourceY,
-        canvas.width,
-        pageCanvas.height,
-        0,
-        0,
-        pageCanvas.width,
-        pageCanvas.height
-      );
-
-      const pageImgData = pageCanvas.toDataURL('image/png');
-      pdf.addImage(pageImgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-
-      heightLeft -= pdfHeight;
-      position += pdfHeight;
-
-      if (heightLeft > 0) {
-        pdf.addPage();
-      }
+    if (!content) {
+      setIsDownloading(false);
+      return;
     }
 
-    // Save the PDF
-    pdf.save('report.pdf');
+    const contentClone = content.cloneNode(true);
+
+    const filtersToRemove = contentClone.querySelectorAll(
+      '.filters, .pagination, .controls, .dropdowns, .chart-controls'
+    );
+    filtersToRemove.forEach((filter) => filter.parentNode.removeChild(filter));
+
+    const overlayInClone = contentClone.querySelector('.loading-overlay');
+    if (overlayInClone) {
+      overlayInClone.parentNode.removeChild(overlayInClone);
+    }
+
+    const tempContainer = document.createElement('div');
+    tempContainer.style.position = 'absolute';
+    tempContainer.style.top = '-9999px';
+    tempContainer.style.left = '-9999px';
+    tempContainer.style.width = `${content.offsetWidth}px`;
+    tempContainer.appendChild(contentClone);
+    document.body.appendChild(tempContainer);
+
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    try {
+      const canvas = await html2canvas(contentClone, {
+        useCORS: true,
+        allowTaint: false,
+        scale: 2,
+      });
+
+      document.body.removeChild(tempContainer);
+
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const canvasWidth = canvas.width;
+      const canvasHeight = canvas.height;
+
+      const ratio = pdfWidth / canvasWidth;
+      const scaledHeight = canvasHeight * ratio;
+
+      let heightLeft = scaledHeight;
+      let pageHeight = pdfHeight - 10;
+      let sourceY = 0;
+      let isFirstPage = true;
+
+      pdf.setFont('helvetica', 'bold');
+      pdf.setFontSize(16);
+      pdf.text('Custom Report', pdfWidth / 2, 10, { align: 'center' });
+
+      while (heightLeft > 0) {
+        const pageCanvas = document.createElement('canvas');
+        pageCanvas.width = canvas.width;
+        pageCanvas.height = pageHeight / ratio;
+
+        const pageContext = pageCanvas.getContext('2d');
+        pageContext.drawImage(
+          canvas,
+          0,
+          sourceY,
+          canvas.width,
+          pageHeight / ratio,
+          0,
+          0,
+          canvas.width,
+          pageHeight / ratio
+        );
+
+        const pageImgData = pageCanvas.toDataURL('image/png');
+        pdf.addImage(
+          pageImgData,
+          'PNG',
+          0,
+          isFirstPage ? 20 : 10,
+          pdfWidth,
+          pdfHeight - 20
+        );
+
+        heightLeft -= pageHeight;
+        sourceY += pageHeight / ratio;
+
+        if (heightLeft > 0) {
+          pdf.addPage();
+          isFirstPage = false;
+        }
+      }
+
+      const currentDate = new Date()
+        .toISOString()
+        .replace(/T/, '_')
+        .replace(/:/g, '-')
+        .slice(0, 19);
+      const fileName = `report_${currentDate}.pdf`;
+      pdf.save(fileName);
+    } catch (error) {
+      console.error('Error generating the PDF:', error);
+    } finally {
+      setIsDownloading(false);
+      if (tempContainer.parentNode) {
+        document.body.removeChild(tempContainer);
+      }
+    }
   };
 
   return (
@@ -133,12 +176,17 @@ const Dashboard = () => {
         <SideBar
           activeTab={activeTab}
           onTabChange={handleTabChange}
-          onDownload={handleDownloadReport} // Pass download handler
+          onDownload={handleDownloadReport}
           sideBarInfo={sideBarInfo}
         />
         <div className="dashboard-content">
           <Navbar />
           <div className="main-content">
+            {isDownloading && (
+              <div className="loading-overlay">
+                <p>Downloading report... Please wait.</p>
+              </div>
+            )}
             <Outlet />
           </div>
         </div>
