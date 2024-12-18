@@ -2,6 +2,7 @@ import { lazy } from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { QueryClient } from '@tanstack/react-query';
 import ProtectedRoute from './components/app/organisms/ProtectedRoute/ProtectedRoute';
+import Dashboard from './components/app/pages/Dashboard/Dashboard';
 
 const Auth = lazy(() => import('./components/app/pages/Auth/Auth'));
 const Register = lazy(
@@ -19,22 +20,19 @@ const Home = lazy(() => import('./components/app/pages/Home/Home'));
 const AddFaculty = lazy(
   () => import('./components/app/pages/AddFaculty/AddFaculty')
 );
-
 const Researcher = lazy(
   () => import('./components/app/pages/Researcher/Researcher')
 );
-
-// const FlowChart = lazy(
-//   () => import('./components/app/organisms/FlowChart/FlowChart')
-// );
-
-import Report from './components/app/pages/Reports/Report';
-
-import Dashboard from './components/app/pages/Dashboard/Dashboard';
-import AllResearchers from './components/app/organisms/AllResearchers/AllResearchers';
-import ErrorElement from './components/common/Error/ErrorElement';
-import RankData from './components/app/pages/RankData/RankData';
-import SearchResults from './components/app/pages/SearchResults/SearchResults';
+const AllResearchers = lazy(
+  () => import('./components/app/organisms/AllResearchers/AllResearchers')
+);
+const RankData = lazy(() => import('./components/app/pages/RankData/RankData'));
+const SearchResults = lazy(
+  () => import('./components/app/pages/SearchResults/SearchResults')
+);
+const ErrorElement = lazy(
+  () => import('./components/common/Error/ErrorElement')
+);
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -53,20 +51,22 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Register />,
+        errorElement: <ErrorElement />,
       },
       {
-        element: <Login />,
         path: 'login',
+        element: <Login />,
+        errorElement: <ErrorElement />,
       },
     ],
   },
   {
-    element: <VerificationPending />,
     path: 'verification-pending',
+    element: <VerificationPending />,
     errorElement: <ErrorElement />,
   },
   {
-    path: '/verify-email',
+    path: 'verify-email',
     element: <VerifyEmail />,
     errorElement: <ErrorElement />,
   },
@@ -82,30 +82,27 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
-      },
-      {
-        path: 'reports',
-        element: <Report />,
+        errorElement: <ErrorElement />,
       },
       {
         path: 'researchers',
         element: <AllResearchers />,
+        errorElement: <ErrorElement />,
       },
       {
         path: 'addFaculty',
         element: <AddFaculty />,
+        errorElement: <ErrorElement />,
       },
       {
         path: 'rankings',
         element: <RankData />,
-      },
-      {
-        // path: 'settings',
-        // element: <FlowChart />,
+        errorElement: <ErrorElement />,
       },
       {
         path: 'search/:query',
         element: <SearchResults />,
+        errorElement: <ErrorElement />,
       },
     ],
   },
