@@ -23,11 +23,11 @@ const sideBarInfo = [
     icon: 'group_add',
     path: '/home/addFaculty',
   },
-  {
-    title: 'Settings',
-    icon: 'settings',
-    path: '/home/settings',
-  },
+  // {
+  //   title: 'Settings',
+  //   icon: 'settings',
+  //   path: '/home/settings',
+  // },
   {
     title: 'Rank Data',
     icon: 'data_usage',

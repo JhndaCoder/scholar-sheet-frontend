@@ -111,15 +111,26 @@ export const useFetchTopResearcherPublications = (
   limit = 10
 ) => {
   const { isLoading, data, error, isError } = useQuery({
-    queryKey: ['researcher-top-publications', scholarId, filters, page, limit],
+    queryKey: ['researcher-top-publications', scholarId, page, limit, filters],
     queryFn: async () => {
+      const requestBody = {
+        ...filters,
+        year: filters.year.length ? filters.year : undefined,
+        journal: filters.journal.length ? filters.journal : undefined,
+        author: filters.author.length ? filters.author : undefined,
+        topic: filters.topic.length ? filters.topic : undefined,
+        citationsRange: filters.citationsRange.length
+          ? filters.citationsRange
+          : undefined,
+      };
+
       const { data } = await customFetch.post(
         `/researcher/stats/top-publications?scholar_id=${scholarId}&page=${page}&limit=${limit}`,
-        filters
+        requestBody
       );
       return data;
     },
-    enabled: !!scholarId,
+    enabled: !!scholarId && !!filters, // Ensures the hook only runs when scholarId and filters exist
   });
   return { isLoading, data, error, isError };
 };

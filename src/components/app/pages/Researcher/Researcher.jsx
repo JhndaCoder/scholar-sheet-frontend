@@ -22,7 +22,7 @@ const Researcher = () => {
         <TopResearchers scholarId={id} />
         <ResearchTopicsChart scholarId={id} />
         <JournalDiversityChart scholarId={id} />
-        <TopPublications />
+        <TopPublications scholarId={id} />
       </div>
     </Fragment>
   );

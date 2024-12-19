@@ -1,11 +1,12 @@
 import { useState, useMemo, useCallback } from 'react';
 import { useGetTopPublications } from '../../../../hooks/useAdminStatsHooks';
+import { useFetchTopResearcherPublications } from '../../../../hooks/useResearcherStatsHooks';
 import { useDepartment } from '../../../../context/DepartmentContext';
 import { useGetPreFilterData } from '../../../../hooks/useAdminStatsHooks';
 import Spinner from '../../../common/Spinner/Spinner';
 import './TopPublications.scss';
 
-const TopPublications = () => {
+const TopPublications = ({ scholarId }) => {
   const { selectedDepartment } = useDepartment();
   const [page, setPage] = useState(1);
   const [filters, setFilters] = useState({
@@ -20,11 +21,24 @@ const TopPublications = () => {
   const [appliedFilters, setAppliedFilters] = useState(filters);
 
   const { data: preFilterData } = useGetPreFilterData(selectedDepartment);
-  const { isLoading, data, error, isError } = useGetTopPublications(
-    appliedFilters,
-    selectedDepartment,
-    page
-  );
+  const {
+    data: adminData,
+    isLoading: isAdminLoading,
+    error: adminError,
+    isError: isAdminError,
+  } = useGetTopPublications(appliedFilters, selectedDepartment, page);
+
+  const {
+    data: researcherData,
+    isLoading: isResearcherLoading,
+    error: researcherError,
+    isError: isResearcherError,
+  } = useFetchTopResearcherPublications(scholarId, appliedFilters, page);
+
+  const isLoading = scholarId ? isResearcherLoading : isAdminLoading;
+  const data = scholarId ? researcherData : adminData;
+  const error = scholarId ? researcherError : adminError;
+  const isError = scholarId ? isResearcherError : isAdminError;
 
   const parseYearInput = (input) => {
     const years = new Set();
